@@ -2,13 +2,14 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useState, useSyncExternalStore } from "react";
+import { useEffect, useLayoutEffect, useState, useSyncExternalStore } from "react";
 import { otherLocale, type Locale } from "@/i18n/config";
 import {
   cycleTheme,
   getThemePref,
   setThemePref,
   subscribeTheme,
+  syncDocument,
   toggleSidebar,
   type ThemePref,
 } from "@/lib/theme";
@@ -83,6 +84,11 @@ export function Sidebar({ locale, brand, items, email, links, labels }: Props) {
       window.location.href = `mailto:${email}`;
     }
   }
+
+  // Dil değişiminde silinen tema/kenar çubuğu durumunu boyamadan önce geri yükle.
+  useLayoutEffect(() => {
+    syncDocument();
+  }, [locale]);
 
   // Klavye kısayolları (referans sitedeki gibi tek harf).
   useEffect(() => {

@@ -48,6 +48,18 @@ export function subscribeTheme(cb: () => void) {
   };
 }
 
+/**
+ * Tema ve kenar çubuğu durumunu localStorage'dan <html>'e yeniden uygular.
+ * Dil değişince (/tr ↔ /en) React kök <html>'i yeniden kurup sonradan
+ * eklenen sınıf/öznitelikleri siler; bu fonksiyon onları geri getirir.
+ */
+export function syncDocument() {
+  applyTheme(getThemePref());
+  try {
+    if (localStorage.getItem("sidebar") === "closed") document.documentElement.dataset.sidebar = "closed";
+  } catch {}
+}
+
 export function toggleSidebar() {
   const root = document.documentElement;
   const closed = root.dataset.sidebar !== "closed";
