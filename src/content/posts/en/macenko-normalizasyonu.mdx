@@ -1,0 +1,39 @@
+export const metadata = {
+  title: "The colour problem in histopathology: Macenko normalization",
+  summary: "The same tissue looks different in different labs. Here is the method I used so a deep learning model doesn't get distracted by that difference.",
+  date: "2026-04-10",
+}
+
+The first thing I noticed in my cancer detection project was how different the colours of the images in the dataset were. The same tissue type could look dark purple in one image and pale pink in another. The cause isn't the tissue; it's the **staining process**.
+
+## Why it matters
+
+Histopathology samples are usually stained with **H&E**:
+- **Hematoxylin** stains cell nuclei purple-blue.
+- **Eosin** stains cytoplasm and connective tissue pink.
+
+Stain brand, staining time, section thickness and the scanner all change the colour. If the model learns that difference, it does well on its training data and fails on another lab's images.
+
+## How the Macenko method works
+
+The idea is simple: find each image's hematoxylin and eosin "stain vectors", then re-stain the image against a common reference.
+
+1. **Convert to optical density:** RGB values become optical density: `OD = −log(I / I₀)`. In this space stain contributions become additive.
+2. **Drop the background:** Almost-white (low-OD) pixels are empty space, not tissue, and are ignored.
+3. **Find the plane:** Singular value decomposition (SVD) on the remaining pixels; the top two components give the plane the stains lie in.
+4. **Extract stain vectors:** Pixels are projected onto that plane. The extremes of the angle distribution (e.g. the 1st and 99th percentiles) give the hematoxylin and eosin directions.
+5. **Normalise concentrations:** Each pixel's stain concentrations are computed and rescaled to the reference image's range.
+6. **Convert back:** A new RGB image is rebuilt with the reference stain vectors.
+
+The result: every image looks as if it came from the same staining protocol, while the tissue structure is preserved.
+
+## Practical notes
+
+- **The reference image matters.** Choose a clean, well-stained image with both nuclei and stroma.
+- Tiles with very little tissue (mostly white) can give unstable vector estimates; filter them out first.
+- Normalising **once, before training,** and saving the results cuts training time considerably.
+- Normalization complements colour augmentation rather than replacing it.
+
+## Effect on the project
+
+I trained ResNet-50 and EfficientNet-B3 on the normalised images and combined their outputs with Softmax-based ensemble learning. With the models focusing on tissue **structure** instead of colour, classification became more consistent. The project taught me that in deep learning you need to understand the data before choosing the model.

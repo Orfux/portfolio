@@ -16,7 +16,7 @@ export default async function AboutPage() {
   return (
     <Container>
       <PageHeader title={t.about.title} />
-      <article className="prose prose-zinc dark:prose-invert prose-a:text-accent-600 dark:prose-a:text-accent-400 max-w-none">
+      <article className="prose prose-zinc dark:prose-invert prose-a:underline-offset-4 prose-a:decoration-zinc-400 max-w-none">
         <About />
       </article>
     </Container>

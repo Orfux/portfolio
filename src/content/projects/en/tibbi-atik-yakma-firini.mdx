@@ -1,0 +1,37 @@
+export const metadata = {
+  title: "Medical Waste Incinerator PLC/HMI Control System",
+  summary: "I designed the control architecture of a medical waste incinerator from scratch on a Delta DVP PLC: an interlocked state machine, dual-burner control and DOPSoft HMI screens.",
+  date: "2025",
+  category: "automation",
+  role: "PLC & HMI Design",
+  tags: ["Delta DVP PLC", "ISPSoft", "WPLSoft", "DOPSoft", "Modbus"],
+  highlight: "S0–S99 interlocked state machine",
+  featured: true,
+}
+
+## About the project
+
+A medical waste incinerator combines high temperatures, combustible fuel and moving mechanical parts, so **safety comes first** in its control software. I built the control architecture from scratch on a **Delta DVP-14SS211R PLC** with a **DVP04AD-S2 analog input module**.
+
+## What I did
+
+- **State machine:** I modelled the process as a state machine of steps S0–S99 (step/STL logic). Every step has defined entry conditions and safety interlocks; if a condition breaks, the system falls back to a safe state.
+- **Dual-burner control:** Logic that manages the start/stop order of two burners, phase transitions and fault handling.
+- **Water pump:** **Delayed shutdown** to keep cooling after the burners stop.
+- **Door actuator:** Door movement proceeds only with **limit switch confirmation**; the sequence never advances without a verified position.
+- **Temperature monitoring:** Analog temperature sensors read over **Modbus** for process monitoring.
+- **HMI:** Operator screens in DOPSoft with multi-state indicators, so the operator sees the current step and active warnings at a glance.
+
+## Testing before the field
+
+I tested the logic **with a COMMGR simulation link** before commissioning, which let me find and fix burner output and phase transition bugs early. Debugging on site is expensive and risky, so simulation testing was one of the most valuable steps of the project.
+
+## Tools
+
+| Area | Tool |
+|---|---|
+| PLC | Delta DVP-14SS211R, DVP04AD-S2 |
+| Programming | ISPSoft, WPLSoft |
+| HMI | DOPSoft |
+| Communication | Modbus |
+| Testing | COMMGR simulation |

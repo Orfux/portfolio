@@ -1,0 +1,30 @@
+export const metadata = {
+  title: "Histopatolojik Görüntülerle Kanser Tespiti",
+  summary: "Akciğer ve kolon kanseri alt tiplerini sınıflandıran uçtan uca bir derin öğrenme sistemi: Macenko normalizasyonu, ResNet-50 ve EfficientNet-B3 topluluk modeli.",
+  date: "2026-01",
+  category: "ai",
+  role: "Derin Öğrenme",
+  tags: ["Python", "Derin Öğrenme", "ResNet-50", "EfficientNet-B3"],
+  highlight: "İki modelin topluluk (ensemble) öğrenmesi",
+}
+
+## Proje hakkında
+
+Histopatoloji, doku örneklerinin mikroskop altında incelenmesidir. Patologların uzun zaman harcadığı bu süreçte derin öğrenme, görüntüleri hızlı ve tutarlı şekilde ön sınıflandırarak karar desteği sağlayabilir. Eylül 2025–Ocak 2026 arasında **akciğer ve kolon kanseri alt tiplerini sınıflandıran** uçtan uca bir sistem geliştirdim.
+
+## Ön işleme: Macenko leke normalizasyonu
+
+Doku örnekleri farklı laboratuvarlarda, farklı boya yoğunluklarıyla hazırlanır. Aynı doku tipi bir görüntüde koyu mor, diğerinde açık pembe görünebilir. Model bu renk farkını "özellik" sanırsa genelleme yapamaz.
+
+Bu yüzden ön işleme hattına **Macenko leke normalizasyonu** ekledim. Yöntem her görüntüdeki hematoksilen ve eozin boya bileşenlerini ayırıp ortak bir referansa göre yeniden ölçekliyor.
+
+## Model: ResNet-50 + EfficientNet-B3
+
+- **ResNet-50:** Artık (residual) bağlantıları sayesinde derin ama kararlı eğitilen, kanıtlanmış bir mimari.
+- **EfficientNet-B3:** Derinlik, genişlik ve çözünürlüğü dengeli ölçekleyen, parametre başına verimli bir mimari.
+
+İki modelin çıktısını **Softmax tabanlı topluluk öğrenmesiyle** birleştirdim. Farklı mimariler farklı hatalar yaptığı için olasılıkları birleştirmek tek modele göre daha güvenilir sonuç veriyor.
+
+## Sonuç
+
+Sistem yüksek doğruluk ve düşük hata oranıyla çalıştı. Bu proje; veri ön işlemenin model seçimi kadar önemli olduğunu ve tıbbi görüntülerde sonucu açıklanabilir tutmanın gerekliliğini bana somut olarak gösterdi.

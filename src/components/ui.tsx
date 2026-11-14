@@ -35,6 +35,7 @@ export function SectionHeading({ title, href, linkLabel }: { title: string; href
 const categoryStyles: Record<Category, string> = {
   web: "bg-sky-50 text-sky-700 dark:bg-sky-950/50 dark:text-sky-300",
   automation: "bg-orange-50 text-orange-700 dark:bg-orange-950/40 dark:text-orange-300",
+  energy: "bg-emerald-50 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-300",
   ai: "bg-violet-50 text-violet-700 dark:bg-violet-950/50 dark:text-violet-300",
 };
 
@@ -78,6 +79,19 @@ function LineArt({ category }: { category: Category }) {
           <circle cx="58" cy="40" r="2.5" />
           <rect x="40" y="64" width="54" height="50" rx="4" />
           <path d="M108 68h52M108 82h40M108 96h48M108 110h30" />
+        </g>
+      )}
+      {category === "energy" && (
+        <g {...common}>
+          {/* Uydu gövdesi + güneş panelleri */}
+          <rect x="80" y="55" width="40" height="50" rx="6" />
+          <path d="M80 80H62M120 80h18" />
+          <rect x="18" y="62" width="44" height="36" rx="3" />
+          <rect x="138" y="62" width="44" height="36" rx="3" />
+          <path d="M33 62v36M47 62v36M153 62v36M167 62v36" />
+          <path d="M100 55V38" />
+          <circle cx="100" cy="32" r="6" />
+          <path d="M92 105v14h16v-14" />
         </g>
       )}
       {category === "ai" && (

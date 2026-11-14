@@ -1,0 +1,39 @@
+export const metadata = {
+  title: "Histopatolojide renk sorunu: Macenko normalizasyonu",
+  summary: "Aynı doku farklı laboratuvarlarda farklı renkte görünür. Derin öğrenme modelinin bu farka takılmaması için kullandığım yöntemi anlatıyorum.",
+  date: "2026-04-10",
+}
+
+Kanser tespiti projemde ilk fark ettiğim şey, veri setindeki görüntülerin renklerinin birbirinden çok farklı olmasıydı. Aynı doku tipi bir görüntüde koyu mor, diğerinde soluk pembe görünebiliyordu. Bunun sebebi doku değil, **boyama süreci**.
+
+## Neden önemli?
+
+Histopatoloji örnekleri genelde **H&E** ile boyanır:
+- **Hematoksilen** hücre çekirdeklerini mor-mavi boyar.
+- **Eozin** sitoplazma ve bağ dokusunu pembe boyar.
+
+Boya markası, boyama süresi, kesit kalınlığı ve tarayıcı cihazı renk tonunu değiştirir. Model bu farkı öğrenirse, eğitim verisinde iyi sonuç alıp başka bir laboratuvarın görüntülerinde başarısız olur.
+
+## Macenko yöntemi nasıl çalışır?
+
+Macenko yönteminin fikri basit: her görüntüdeki hematoksilen ve eozin "boya vektörlerini" bulmak, sonra görüntüyü ortak bir referansa göre yeniden boyamak.
+
+1. **Optik yoğunluğa çevir:** RGB değerleri optik yoğunluğa dönüştürülür: `OD = −log(I / I₀)`. Bu uzayda boyaların etkisi toplanabilir hale gelir.
+2. **Arka planı at:** Neredeyse beyaz (düşük OD'li) pikseller doku değil boşluktur, hesaba katılmaz.
+3. **Düzlemi bul:** Kalan pikseller üzerinde tekil değer ayrışımı (SVD) yapılır. En büyük iki bileşen, boyaların yayıldığı düzlemi verir.
+4. **Boya vektörlerini çıkar:** Pikseller bu düzleme izdüşürülür. Açı dağılımının uç noktaları (ör. 1. ve 99. yüzdelikler) hematoksilen ve eozin yönlerini verir.
+5. **Yoğunlukları normalize et:** Her pikselin boya yoğunlukları hesaplanır ve referans görüntünün yoğunluk aralığına ölçeklenir.
+6. **Geri dönüştür:** Referans boya vektörleriyle yeniden RGB görüntü oluşturulur.
+
+Sonuçta tüm görüntüler aynı "boyama protokolünden" çıkmış gibi görünür, ama dokunun yapısı korunur.
+
+## Pratik notlar
+
+- **Referans görüntü seçimi önemli.** Temiz, iyi boyanmış, hem çekirdek hem stroma içeren bir görüntü seçin.
+- Çok az doku içeren (çoğu beyaz) karelerde vektör tahmini kararsız olabilir. Bu kareleri önceden elemek iyi bir fikir.
+- Normalizasyonu **eğitimden önce, bir kez** yapıp sonuçları kaydetmek eğitim süresini ciddi kısaltır.
+- Normalizasyon, renk tabanlı veri artırmanın (color augmentation) alternatifi değil, tamamlayıcısıdır.
+
+## Projede etkisi
+
+Normalize edilmiş görüntülerle ResNet-50 ve EfficientNet-B3 modellerini eğittim ve çıktılarını Softmax tabanlı topluluk öğrenmesiyle birleştirdim. Modellerin renk yerine dokunun **yapısına** odaklanması, sınıflandırmayı daha tutarlı hale getirdi. Bu proje bana, bir derin öğrenme projesinde model seçiminden önce veriyi anlamak gerektiğini öğretti.

@@ -1,0 +1,37 @@
+export const metadata = {
+  title: "Tıbbi Atık Yakma Fırını PLC/HMI Kontrol Sistemi",
+  summary: "Delta DVP PLC ile tıbbi atık yakma fırınının kontrol mimarisini sıfırdan tasarladım: emniyet kilitlemeli durum makinesi, çift brülör kontrolü ve DOPSoft HMI ekranları.",
+  date: "2025",
+  category: "automation",
+  role: "PLC & HMI Tasarımı",
+  tags: ["Delta DVP PLC", "ISPSoft", "WPLSoft", "DOPSoft", "Modbus"],
+  highlight: "S0–S99 emniyet kilitlemeli durum makinesi",
+  featured: true,
+}
+
+## Proje hakkında
+
+Tıbbi atık yakma fırınları; yüksek sıcaklık, yanıcı yakıt ve hareketli mekanik parçaları bir arada barındırdığı için kontrol yazılımında **emniyetin her şeyden önce geldiği** sistemlerdir. Bu projede fırının kontrol mimarisini **Delta DVP-14SS211R PLC** ve **DVP04AD-S2 analog giriş modülü** üzerine sıfırdan kurdum.
+
+## Yaptıklarım
+
+- **Durum makinesi:** Prosesi S0–S99 adımlarından oluşan bir durum makinesi (step/STL mantığı) olarak modelledim. Her adımın giriş koşulları ve emniyet kilitleri (interlock) tanımlı; bir koşul bozulduğunda sistem güvenli duruma geçiyor.
+- **Çift brülör kontrolü:** İki brülörün devreye girme ve çıkma sırasını, faz geçişlerini ve hata durumlarını yöneten lojik.
+- **Su pompası:** Brülörler durduktan sonra soğutma için **gecikmeli kapanma** mantığı.
+- **Kapı aktüatörü:** Kapı hareketi **limit switch onayıyla** ilerliyor. Konum doğrulanmadan bir sonraki adıma geçilmiyor.
+- **Sıcaklık izleme:** Analog sıcaklık sensörlerini **Modbus** üzerinden okuyarak proses değerlerini izledim.
+- **HMI:** DOPSoft ile çok durumlu göstergelere sahip operatör ekranları tasarladım. Operatör, prosesin hangi adımda olduğunu ve aktif uyarıları tek bakışta görebiliyor.
+
+## Sahaya çıkmadan test
+
+Lojiği **COMMGR simülasyon bağlantısıyla** sahaya çıkmadan test ettim. Bu sayede brülör çıkışı ve faz geçişindeki hataları devreye alma öncesinde bulup giderdim. Sahada hata ayıklamak hem pahalı hem risklidir, bu yüzden simülasyonla test etmek projenin en değerli adımlarından biri oldu.
+
+## Kullanılan araçlar
+
+| Alan | Araç |
+|---|---|
+| PLC | Delta DVP-14SS211R, DVP04AD-S2 |
+| Programlama | ISPSoft, WPLSoft |
+| HMI | DOPSoft |
+| Haberleşme | Modbus |
+| Test | COMMGR simülasyonu |

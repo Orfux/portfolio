@@ -1,6 +1,6 @@
 {
   "meta": {
-    "description": "Web siteleri, PLC/SCADA otomasyon sistemleri ve LLM tabanlı yapay zekâ projeleri geliştiriyorum."
+    "description": "Elektrik-elektronik mühendisi. Endüstriyel otomasyon, PLC/HMI-SCADA, enerji sistemleri ve yapay zekâ destekli projeler."
   },
   "nav": {
     "home": "Ana Sayfa",
@@ -18,7 +18,7 @@
     "close": "Kapat"
   },
   "home": {
-    "hero": "{name}, **web siteleri**, **PLC/SCADA sistemleri** ve **yapay zekâ projeleri** geliştiren bir **otomasyon ve yazılım geliştiricisi**.",
+    "hero": "{name}, **endüstriyel otomasyon**, **PLC/HMI-SCADA** ve **yapay zekâ destekli sistemler** üzerine çalışan bir **elektrik-elektronik mühendisi**.",
     "photoAlt": "{name} fotoğrafı",
     "featured": "Öne Çıkan Proje",
     "selected": "Seçili Projeler",
@@ -32,6 +32,7 @@
     "all": "Tümü",
     "web": "Web",
     "automation": "PLC / SCADA",
+    "energy": "Enerji & Donanım",
     "ai": "Yapay Zekâ"
   },
   "projects": {

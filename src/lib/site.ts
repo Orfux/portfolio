@@ -1,14 +1,11 @@
 import type { Locale } from "@/i18n/config";
 
-/**
- * Sitenin genel bilgileri. Gerçek bilgilerinle burayı güncelle.
- * TODO: tam isim, e-posta, GitHub/LinkedIn ve fotoğraf.
- */
+/** Sitenin genel bilgileri. */
 export const site = {
-  name: "Orhun",
+  name: "Orhun Şerbetçi",
   title: {
-    tr: "Otomasyon & Yazılım Geliştirici",
-    en: "Automation & Software Developer",
+    tr: "Elektrik-Elektronik Mühendisi",
+    en: "Electrical & Electronics Engineer",
   } satisfies Record<Locale, string>,
   /** Kenar çubuğunun üstündeki marka yazısı: kalın + soluk kısım */
   brand: { strong: "orhun", dim: "serbetci.com" },
@@ -16,9 +13,9 @@ export const site = {
   photo: "",
   url: "https://orhunserbetci.com",
   links: {
-    email: "mail@example.com",
+    email: "orhunsrbtc@gmail.com",
     github: "https://github.com/Orfux",
-    linkedin: "https://www.linkedin.com/",
+    linkedin: "https://www.linkedin.com/in/orhun-%C5%9Ferbet%C3%A7i-b7b480232/",
   },
 };
 

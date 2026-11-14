@@ -1,0 +1,43 @@
+export const metadata = {
+  title: "Pano tasarımında 8 kural: EPLAN çiziminden montaja",
+  summary: "Elektrik projesini çizerken uyduğum ve montajda, devreye almada, yıllar sonraki arızada işimi kolaylaştıran kurallar.",
+  date: "2026-02-16",
+}
+
+İyi bir pano sadece çalışan pano değildir. Montajcının kolayca kurabildiği, devreye almada hızlı test edilebilen ve beş yıl sonra arızaya gelen teknisyenin çizime bakıp beş dakikada sorunu bulabildiği panodur. EPLAN ile proje çizerken uyduğum kurallar şunlar:
+
+## 1. Tutarlı cihaz isimlendirmesi
+
+Her cihazın bir **tesis (=)**, **konum (+)** ve **cihaz (-)** tanımı olsun. `-K1` yerine `=A1+P1-K12` gibi tam bir referans, cihazın hangi bölümde ve hangi panoda olduğunu anında söyler. İsimlendirmeyi projenin başında belirleyin, sonradan değiştirmek çok zahmetlidir.
+
+## 2. Çapraz referansları kullanın
+
+Bir rölenin bobini bir sayfada, kontakları başka sayfalardaysa EPLAN'ın çapraz referansları bunları birbirine bağlar. Kâğıt üzerinde "bu kontak hangi röleye ait?" sorusunu bitiren şey budur.
+
+## 3. Kablo ve klemens numaraları
+
+Her kabloya ve klemense bir numara verin ve bunları **klemens planı** olarak çıktı alın. Sahadaki montajcının en çok kullandığı sayfa genelde klemens planıdır.
+
+## 4. Güç ve sinyali ayırın
+
+230/400 V AC güç kabloları ile 24 V DC sinyal ve analog kablolar aynı kanaldan geçmemeli. Özellikle analog sinyaller ve haberleşme hatları (RS-485, Ethernet) sürücü çıkış kablolarının yakınında gürültü toplar.
+
+## 5. Yedek kapasite bırakın
+
+Kablo kanallarını tamamen doldurmayın, DIN rayında ve klemenslerde boş yer bırakın. Projeler devreye almada mutlaka büyür: bir sensör, bir röle, bir buton daha eklenir.
+
+## 6. Isıyı hesaba katın
+
+Sürücüler, güç kaynakları ve kontaktörler ısı üretir. Pano içindeki toplam kaybı tahmin edip havalandırma ya da fan ihtiyacını baştan planlayın. Sürücüleri panonun alt kısmına, ısıya duyarlı elektroniği uzağa yerleştirin.
+
+## 7. Koruma ve topraklama
+
+Her devrenin sigorta veya otomat değeri yük akımına ve kablo kesitine göre seçilmeli. PE bağlantıları ayrı bir bara üzerinde toplanmalı, blendajlı kablolar bu bara üzerinden topraklanmalı.
+
+## 8. Çizim ile pano aynı olsun
+
+Devreye almada yapılan her değişikliği aynı gün çizime işleyin. Çizimle uyuşmayan bir pano, hiç çizimi olmayan panodan daha tehlikelidir, çünkü insanları yanlış yönlendirir.
+
+---
+
+EPLAN'ın en büyük avantajı çizimi bir **veri** olarak tutması: malzeme listesi, klemens planı, kablo listesi ve etiketler aynı projeden otomatik üretilir. Bu kurallara uyduğunuzda o otomatik çıktılar da doğru olur.

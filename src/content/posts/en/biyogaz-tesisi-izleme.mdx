@@ -1,0 +1,37 @@
+export const metadata = {
+  title: "How do you monitor energy production at a biogas plant?",
+  summary: "The key values an operator tracks on the way from organic waste to electricity, and why maintenance planning matters.",
+  date: "2026-07-19",
+}
+
+Biogas plants break down animal and agricultural waste without oxygen (anaerobic digestion) to produce biogas. Thanks to its **methane** content, that gas is burned in a gas engine to generate electricity. Working as an operator at a biogas power plant, I've seen that the process is not as simple as "waste in, electricity out". There is a chain in between that needs constant monitoring.
+
+## The process in brief
+
+1. **Feeding:** Organic waste is fed into the digester.
+2. **Digestion:** Bacteria break down the waste and biogas forms. A large share of biogas is methane; the rest is mostly CO₂.
+3. **Gas treatment:** The gas is dried and cleaned of sulphur compounds (H₂S) that could damage the engine.
+4. **Power generation:** The gas engine drives a generator. The electricity goes to the grid, and the engine's heat can also be used.
+
+## Values tracked daily and hourly
+
+The main indicators I look at to see whether production is healthy:
+
+- **Active power (kW) and energy produced (kWh):** Hourly and daily production is the clearest measure of plant performance. Sudden drops are often the first sign of a problem on the gas side or in the engine.
+- **Gas flow and methane content:** Lower methane means less energy available to the engine.
+- **Engine temperatures:** Coolant, oil and exhaust temperatures give early warnings about engine health.
+- **Operating hours:** The basis of maintenance planning.
+
+Logging these values regularly says much more than any single reading. Logs make **trends** visible: a temperature that creeps up slowly can be the herald of a future fault.
+
+## Maintenance by operating hours
+
+Gas engine maintenance is planned by **operating hours**, not by the calendar. Oil changes, spark plug checks and larger services happen at set hour intervals.
+
+Doing maintenance on time matters for two reasons:
+- Unplanned downtime means lost production; every hour the engine is down is energy not produced.
+- Small postponed jobs can turn into large, expensive failures.
+
+## Through an automation lens
+
+My automation background helps a lot here. Some of the plant's measurements are already monitored on SCADA screens. Setting alarm limits correctly, reading trend charts and telling a sensor fault apart from a real process problem are an important part of the daily work. This intersection of power generation and control systems also deepens my interest in EMS and energy storage.

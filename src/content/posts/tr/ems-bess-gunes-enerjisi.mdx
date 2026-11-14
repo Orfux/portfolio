@@ -1,0 +1,44 @@
+export const metadata = {
+  title: "EMS, BESS ve güneş enerjisi: üç kavram, tek sistem",
+  summary: "Güneş santrali, batarya depolama ve enerji yönetim sistemi birlikte nasıl çalışır? Bir otomasyon mühendisinin gözünden temel kavramlar.",
+  date: "2026-09-28",
+}
+
+Son dönemde kendimi en çok geliştirmek istediğim alan enerji sistemleri. Özellikle güneş enerjisi (PV), batarya enerji depolama (BESS) ve bunları yöneten enerji yönetim sistemleri (EMS) birbirine sıkı bağlı. Bu yazıda üç kavramı ve birlikte nasıl çalıştıklarını özetliyorum.
+
+## Güneş enerjisi (PV)
+
+Güneş panelleri gün içinde değişken bir güç üretir: sabah düşük, öğlen yüksek, akşam sıfır. Bulut geçtiğinde üretim saniyeler içinde düşebilir. Asıl sorun da bu: **üretim, tüketimin olduğu anla her zaman örtüşmez.**
+
+## Batarya enerji depolama (BESS)
+
+BESS, enerjiyi fazla olduğu anda depolayıp gerektiğinde geri verir. Bir BESS'in ana parçaları:
+
+- **Batarya modülleri:** Enerjiyi kimyasal olarak depolar (günümüzde çoğunlukla LFP lityum).
+- **BMS (Batarya Yönetim Sistemi):** Hücre gerilimlerini, sıcaklıkları ve şarj durumunu (SoC) izler, bataryayı korur.
+- **PCS (Güç Dönüştürme Sistemi):** Bataryanın DC enerjisini şebekenin AC'sine (ve tersine) dönüştüren çift yönlü invertör.
+
+BMS ile EMS sık karıştırılır: **BMS bataryanın içini**, **EMS ise bataryanın sistemdeki rolünü** yönetir.
+
+## Enerji yönetim sistemi (EMS)
+
+EMS, sistemin "beyni"dir. PV üretimini, tüketimi, bataryanın durumunu ve şebeke koşullarını izler ve şu soruya cevap verir: **Şu an bataryayı şarj mı etmeliyim, deşarj mı, yoksa beklemeli miyim?**
+
+Tipik EMS stratejileri:
+
+| Strateji | Ne yapar? |
+|---|---|
+| Öz tüketim artırma | Gün içindeki fazla PV'yi depolar, akşam kullanır |
+| Puant tıraşlama (peak shaving) | Tüketim zirvelerinde bataryadan besleyerek şebekeden çekilen maksimum gücü düşürür |
+| Enerji arbitrajı | Ucuz saatlerde şarj, pahalı saatlerde deşarj |
+| Şebeke destek hizmetleri | Frekans ve gerilim dengelemeye katkı |
+
+EMS bu kararları verirken sınırlara uyar: bataryanın SoC aralığı, maksimum şarj/deşarj gücü, sıcaklık ve batarya ömrü.
+
+## Otomasyon mühendisinin işi nerede başlıyor?
+
+Bu sistemlerin hepsi birbiriyle haberleşmek zorunda. PV invertörleri, BMS, PCS ve sayaçlar genellikle **Modbus TCP** üzerinden veri verir. Trafo merkezlerinde ve büyük santrallerde ise **IEC 61850** ve **DNP3** gibi protokoller öne çıkar.
+
+Bir EMS'in arka planında aslında tanıdık şeyler var: saha cihazlarından veri toplamak, kontrol mantığı yürütmek, alarmları yönetmek ve her şeyi bir SCADA ekranında göstermek. PLC ve SCADA deneyiminin enerji sektörüne bu kadar doğal geçmesinin sebebi de bu.
+
+Önümüzdeki dönemde IEC 61850 ve BESS kontrol stratejileri üzerine çalışmayı ve öğrendiklerimi burada paylaşmayı planlıyorum.

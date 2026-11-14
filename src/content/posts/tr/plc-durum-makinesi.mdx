@@ -1,0 +1,50 @@
+export const metadata = {
+  title: "PLC'de durum makinesi: adım adım güvenli sıralama",
+  summary: "Brülör, kapı, pompa gibi sıralı prosesleri karmaşık ladder yerine durum makinesiyle yazmak neden daha güvenli ve okunur?",
+  date: "2025-12-08",
+}
+
+Sıralı bir prosesi (önce kapıyı aç, sonra yükle, kapıyı kapat, brülörü yak…) düz ladder mantığıyla yazmaya başladığınızda, kısa sürede birbirini kilitleyen onlarca kontak ve "bu neden şu an çalıştı?" sorusuyla karşılaşırsınız. **Durum makinesi** (state machine) bu karmaşayı çözmenin en sağlam yollarından biri.
+
+## Fikir
+
+Proses, birbirinden ayrık **adımlardan** oluşur ve aynı anda **yalnızca bir adım aktiftir**. Her adım iki şey tanımlar:
+
+1. **Bu adımdayken ne yapılır?** (hangi çıkışlar açık)
+2. **Bir sonraki adıma ne zaman geçilir?** (geçiş koşulu)
+
+Delta'daki STL/step yapısı, Siemens'teki GRAPH ya da bir tamsayı değişkeniyle yazılmış `CASE` bloğu aynı fikrin farklı uygulamalarıdır.
+
+```text
+S0  Bekleme        → Start basıldı ve emniyet tamam → S10
+S10 Kapı açılıyor  → Kapı açık limit switch'i      → S20
+S20 Yükleme        → Operatör onayı                → S30
+S30 Kapı kapanıyor → Kapı kapalı limit switch'i    → S40
+S40 Brülör 1       → Sıcaklık > hedef              → S50
+...
+```
+
+## Güvenli yazmanın kuralları
+
+**1. Emniyet kilitleri adımların dışında olsun.**
+Acil stop, kapı emniyeti, aşırı sıcaklık gibi koşullar tek bir yerde, tüm adımlardan **önce** değerlendirilmeli. Hangi adımda olunursa olunsun, emniyet bozulduğunda çıkışlar kesilip sistem güvenli adıma dönmeli.
+
+**2. Her adıma zaman aşımı koyun.**
+"Kapı kapanıyor" adımında limit switch 10 saniyede gelmediyse bir şeyler yanlıştır. Bu durumda sistem sonsuza kadar beklememeli, alarm verip güvenli duruma geçmeli. Bu basit kural sahadaki arızaların çoğunu anında görünür kılar.
+
+**3. Çıkışları adım numarasından türetin.**
+Bir çıkışı birden çok yerde set/reset etmek yerine, "pompa = S40 aktif VEYA S50 aktif VEYA soğutma gecikmesi" gibi tek bir satırda yazın. Böylece bir çıkışın neden açık olduğu tek bakışta anlaşılır.
+
+**4. Gecikmeli kapanmaları açıkça modelleyin.**
+Brülör söndükten sonra soğutma pompasının bir süre daha çalışması gibi davranışları ayrı bir zamanlayıcı ya da ayrı bir adım olarak yazın, gizli kontaklara gömmeyin.
+
+**5. Adım numaralarına boşluk bırakın.**
+10, 20, 30 diye ilerlemek araya yeni adım eklemeyi kolaylaştırır.
+
+## HMI tarafı
+
+Durum makinesinin güzel bir yan etkisi var: aktif adım numarasını HMI'da göstermek, operatöre "sistem şu an ne yapıyor ve neyi bekliyor?" sorusunun cevabını verir. Her adıma bir metin karşılığı ("Kapı kapanıyor — limit switch bekleniyor") eklemek arıza süresini ciddi şekilde kısaltır.
+
+## Sahaya çıkmadan test
+
+Durum makinesi simülasyonla test etmeye çok uygundur. Girişleri elle değiştirip her geçişi, zaman aşımını ve emniyet kesmesini tek tek deneyebilirsiniz. Tıbbi atık yakma fırını projemde lojiği bu şekilde simülasyonla test ettim. Brülör çıkışı ve faz geçişindeki hataları sahaya gitmeden bulmak hem zaman hem güvenlik açısından büyük fark yarattı.

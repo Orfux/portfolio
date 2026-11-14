@@ -1,0 +1,52 @@
+export const metadata = {
+  title: "Modbus RTU'ya hızlı giriş: register'lar, adresler ve sık yapılan hatalar",
+  summary: "Sahada en çok karşılaşılan haberleşme protokolünü, adresleme karmaşasını ve RS-485 hattında vakit kaybettiren hataları özetliyorum.",
+  date: "2025-11-03",
+}
+
+Modbus 1979'dan beri kullanılan, basit ve neredeyse her cihazın desteklediği bir protokol. Sıcaklık kontrolörü, enerji analizörü, sürücü, PLC… Sahada bir cihazla konuşmanız gerekiyorsa büyük ihtimalle Modbus'la başlayacaksınız.
+
+## Temel mantık
+
+Modbus RTU'da hatta bir **master** (istemci) ve en fazla 247 **slave** (sunucu) bulunur. Konuşmayı her zaman master başlatır: "3 numaralı cihaz, şu adresten şu kadar register oku" der, cihaz cevap verir. Slave'ler kendiliğinden veri göndermez.
+
+Fiziksel katman genellikle **RS-485**'tir: iki telli (A/B), gürültüye dayanıklı, yüzlerce metreye kadar çıkabilen bir hat.
+
+## Dört veri tipi
+
+| Tip | Boyut | Erişim | Okuma / yazma fonksiyonu |
+|---|---|---|---|
+| Coil | 1 bit | Okuma/yazma | 01 / 05, 15 |
+| Discrete input | 1 bit | Sadece okuma | 02 |
+| Input register | 16 bit | Sadece okuma | 04 |
+| Holding register | 16 bit | Okuma/yazma | 03 / 06, 16 |
+
+Pratikte en çok **03 (holding register oku)** ve **06/16 (register yaz)** kullanılır.
+
+## Adresleme: "1 fark" tuzağı
+
+Kılavuzlarda adresler genelde `40001` gibi yazılır. Buradaki `4` holding register tipini, `0001` ise sıra numarasını gösterir. Ama protokolün içinde bu register'ın adresi **0**'dır.
+
+Yani kılavuzda `40101` yazıyorsa, yazılımda büyük ihtimalle **100** girmeniz gerekir. Okuduğunuz değerler "bir kayık" görünüyorsa ilk şüpheleneceğiniz yer burası.
+
+## 32 bitlik değerler ve word sırası
+
+Bir register 16 bit tutar. Enerji (kWh) ya da ondalıklı (float) değerler iki register'a yayılır. Cihaz bunları **yüksek word önce** ya da **düşük word önce** gönderebilir. Saçma büyüklükte bir sayı okuyorsanız, iki register'ın yerini değiştirip tekrar deneyin.
+
+## Hattı kurarken kontrol listesi
+
+- **Baud rate, parite, stop bit** hattaki tüm cihazlarda aynı olmalı (ör. 9600, 8N1).
+- Her cihazın **slave ID**'si benzersiz olmalı.
+- **A/B uçları** ters bağlanırsa hiç cevap gelmez. Üreticiler A/B'yi farklı adlandırabilir, ilk denemede çevirmeyi göze alın.
+- Hattın **iki ucuna** 120 Ω sonlandırma direnci koyun, ortadaki cihazlara koymayın.
+- Hattı **zincir (daisy chain)** şeklinde çekin, yıldız bağlantıdan kaçının.
+- Blendajlı, bükümlü çift kablo kullanın ve blendajı **tek noktadan** topraklayın.
+
+## Hata ayıklarken
+
+1. Önce bilgisayardan bir Modbus test aracıyla tek cihazı okuyun. PLC'ye geçmeden haberleşmenin çalıştığından emin olun.
+2. Zaman aşımı alıyorsanız sorun büyük ihtimalle fiziksel katmanda ya da ayarlardadır: kablo, A/B, baud rate, slave ID.
+3. CRC hatası alıyorsanız gürültü, eksik sonlandırma ya da hız uyumsuzluğundan şüphelenin.
+4. Cevap gelip değer anlamsızsa adres kayması, word sırası ve ölçekleme (×10, ×100) ihtimallerini kontrol edin.
+
+Modbus basit olduğu için güçlü. Sorunların çoğu protokolden değil, kablodan ve adres tablosunu yanlış okumaktan çıkıyor.

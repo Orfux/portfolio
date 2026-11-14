@@ -10,8 +10,8 @@ import type { Locale } from "@/i18n/config";
  * Yeni proje/yazı eklemek için yeni bir .mdx dosyası oluşturman yeterli.
  */
 
-export const categories = ["web", "automation", "ai"] as const;
-export type Category = (typeof categories)[number];
+import type { Category } from "./categories";
+export { categories, type Category } from "./categories";
 
 export type ProjectMeta = {
   title: string;

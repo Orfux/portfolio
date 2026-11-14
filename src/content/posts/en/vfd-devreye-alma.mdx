@@ -1,0 +1,42 @@
+export const metadata = {
+  title: "My checklist for commissioning a VFD",
+  summary: "The parameters I check before and after running a variable frequency drive for the first time, and the most common mistakes.",
+  date: "2026-03-21",
+}
+
+A variable frequency drive (VFD) soft-starts a motor, controls its speed and saves energy. With the wrong parameters, though, the motor overheats, the drive keeps tripping, or the mechanics get damaged. This is the order I follow when commissioning a drive:
+
+## Before powering up
+
+- **Nameplate data:** Note the motor's voltage, current, frequency, speed and power.
+- **Connection:** Should the motor be wired star or delta? It must match the drive's output voltage.
+- **Cabling:** Use shielded cable between drive and motor and ground the shield properly at both ends. Very long motor cables may need an output filter.
+- **Input protection:** Input fuses or breakers should match the values in the drive manual.
+
+## Core parameters
+
+1. **Motor data:** Enter the nameplate values into the drive.
+2. **Auto-tune:** If possible, decouple the motor and run a full auto-tune; otherwise use the static tune. Vector control depends on it.
+3. **Control source:** Where do start/stop and the speed reference come from? Keypad, terminals or communication (Modbus etc.).
+4. **Min/max frequency:** Very low speeds can hurt cooling on pumps and fans. Don't exceed the maximum speed the mechanics can handle.
+5. **Ramp times:** Too short an acceleration time causes overcurrent trips; too short a deceleration time causes overvoltage trips. High-inertia loads may need a **braking resistor**.
+6. **Motor overload protection:** Set thermal protection to the motor's rated current.
+
+## First run
+
+- Run at a low frequency (e.g. 5–10 Hz) and check the **direction of rotation**. If it's wrong, swap two output phases or use the direction parameter.
+- Watch the current. Unexpectedly high current at no load points to a wiring or parameter error.
+- Increase speed gradually and listen for vibration and noise.
+
+## Common faults
+
+| Fault | Likely cause |
+|---|---|
+| Overcurrent while accelerating | Ramp too short, jammed load, wrong motor data |
+| Overvoltage while decelerating | Decel ramp too short, no braking resistor |
+| Motor overheating | Long periods at low speed, wrong thermal setting |
+| Noise on measurements/communication | Missing shielding and grounding, cables bundled together |
+
+## Last step: back up
+
+When commissioning is done, back up the parameters and add them to the project files. If the drive is ever replaced, you can restore the same settings in minutes.

@@ -1,0 +1,37 @@
+export const metadata = {
+  title: "Biyogaz tesisinde enerji üretimi nasıl izlenir?",
+  summary: "Organik atıktan elektriğe uzanan süreçte bir operatörün takip ettiği temel değerler ve bakım planlamasının önemi.",
+  date: "2026-07-19",
+}
+
+Biyogaz tesisleri hayvansal ve tarımsal atıkları oksijensiz ortamda çürüterek (anaerobik çürütme) biyogaz üretir. Bu gaz, içindeki **metan** sayesinde bir gaz motorunda yakılır ve elektrik üretir. Bir biyogaz enerji tesisinde operatör olarak çalışırken, sürecin "atık girer, elektrik çıkar" kadar basit olmadığını gördüm. Arada sürekli izlenmesi gereken bir zincir var.
+
+## Süreç kısaca
+
+1. **Besleme:** Organik atık çürütücüye (fermentöre) beslenir.
+2. **Çürütme:** Bakteriler atığı parçalar ve biyogaz oluşur. Biyogazın önemli bir kısmı metandır, geri kalanı ağırlıkla CO₂'dir.
+3. **Gaz hazırlama:** Gaz nemden ve motora zarar verebilecek kükürt bileşiklerinden (H₂S) arındırılır.
+4. **Enerji üretimi:** Gaz motoru bir jeneratörü döndürür. Üretilen elektrik şebekeye verilir, motorun ısısından da yararlanılabilir.
+
+## Günlük ve saatlik izlenen değerler
+
+Üretimin sağlıklı gidip gitmediğini anlamak için baktığım başlıca göstergeler:
+
+- **Aktif güç (kW) ve üretilen enerji (kWh):** Saatlik ve günlük üretim, tesisin performansının en net ölçüsü. Ani düşüşler genelde gaz tarafında ya da motorda bir sorunun ilk işaretidir.
+- **Gaz debisi ve metan oranı:** Metan oranı düşerse motorun alabileceği enerji azalır.
+- **Motor sıcaklıkları:** Soğutma suyu, yağ ve egzoz sıcaklıkları motorun sağlığı hakkında erken uyarı verir.
+- **Çalışma saati:** Bakım planlamasının temeli.
+
+Bu değerleri düzenli kaydetmek, tek bir anlık ölçümden çok daha fazlasını söyler. Kayıtlar sayesinde **trendler** görünür: yavaş yavaş artan bir sıcaklık, gelecekteki bir arızanın habercisi olabilir.
+
+## Bakım: çalışma saatine göre plan
+
+Gaz motorlarında bakımlar takvime göre değil, **çalışma saatine** göre planlanır. Yağ değişimi, buji kontrolü ve daha kapsamlı bakımlar belirli saat aralıklarında yapılır.
+
+Bakımı zamanında yapmak iki açıdan kritik:
+- Plansız duruş, üretim kaybı demektir. Motor çalışmadığı her saat üretilmeyen enerjidir.
+- Ertelenen küçük bakımlar, büyük ve pahalı arızalara dönüşebilir.
+
+## Otomasyon gözüyle
+
+Otomasyon geçmişim burada çok işime yarıyor. Tesisteki ölçümlerin bir kısmı zaten SCADA ekranlarından izleniyor. Alarm sınırlarının doğru ayarlanması, trend grafiklerinin okunması ve sensör hatası ile gerçek proses sorununu ayırt edebilmek günlük işin önemli bir parçası. Enerji üretimi ile kontrol sistemlerinin kesiştiği bu alan, EMS ve enerji depolama konularına olan ilgimi de artırıyor.

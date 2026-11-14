@@ -1,23 +1,32 @@
 export const metadata = {
   title: "Bringing PLC data to a web interface",
-  summary: "A practical way to show live shop-floor data in the browser with OPC UA. (Sample post)",
+  summary: "A practical way to show live shop-floor data in the browser with OPC UA: architecture, sample code and things to watch out for.",
   date: "2025-10-12",
 }
 
-Showing a PLC's data in a browser is no longer as hard as it sounds.
+Showing a PLC's data in a browser is no longer as hard as it sounds. Classic SCADA software is still at the centre of the job, but for a simple monitoring screen, a phone notification or a summary dashboard for managers, web technologies are very practical.
 
 ## The basic architecture
 
-1. PLC → **OPC UA** server
-2. A small bridge service (Node.js or Python) reads the data
-3. It pushes updates to the browser over WebSocket
+1. **PLC → OPC UA server:** Many modern PLCs such as the Siemens S7-1500 ship with a built-in OPC UA server. Older devices use a gateway.
+2. **Bridge service:** A small Node.js or Python service reads tags from OPC UA.
+3. **Browser:** The service pushes values to the browser live over WebSocket.
 
 ```ts
-// Example: read a tag every second and broadcast it
+// Read a tag every second and send it to every connected browser
 setInterval(async () => {
   const value = await session.read({ nodeId: "ns=3;s=Line1.Speed" });
   broadcast({ line1Speed: value.value.value });
 }, 1000);
 ```
 
-> This is a **sample** post. Replace it with your own.
+In a real application, OPC UA **subscriptions** are more efficient than polling every second: the server notifies you when a value changes.
+
+## Things to watch out for
+
+- **Security first.** Never expose the PLC network directly to the internet. The bridge should be a controlled link between the OT and IT networks. Don't disable OPC UA's certificate-based encryption.
+- **Separate reading from writing.** Monitoring screens should be read-only. Sending commands from the web to a PLC needs separate authorisation and confirmation.
+- **Handle disconnects.** When the network drops, the screen should show the last known value and clearly mark it as stale.
+- **Do units and scaling in one place.** Resolve whether a raw value is ×10 or ×100 in the bridge so the frontend always works with meaningful values.
+
+This approach doesn't replace SCADA, it complements it: it brings shop-floor data as close as a browser to everyone who needs it.

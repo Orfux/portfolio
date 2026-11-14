@@ -1,0 +1,36 @@
+export const metadata = {
+  title: "Florya Aydın Florist Website",
+  summary: "An online ordering site for a boutique florist in Aydın: product catalog, cart, accounts, discount codes and an admin panel.",
+  date: "2026",
+  category: "web",
+  role: "Design & Development",
+  tags: ["HTML/CSS/JS", "Supabase", "Vercel"],
+  highlight: "Live: floryaaydin.orhunserbetci.com",
+  link: "https://floryaaydin.orhunserbetci.com",
+}
+
+![Florya Aydın homepage](/sites/florya.png)
+
+## About the project
+
+I built an end-to-end website for a boutique florist in Efeler, Aydın, so customers can browse bouquets and order online. The site is live at `floryaaydin.orhunserbetci.com`.
+
+## Features
+
+**For customers**
+- Product catalog by category (bouquets, arrangements, potted plants, opening flowers…)
+- Cart and checkout flow, plus ordering via WhatsApp
+- Discount codes (minimum total, usage limit, date range)
+- Accounts: email/password sign-up, Google/Facebook sign-in, password reset, order history and profile
+
+**Admin panel**
+- Add/edit products; photos are resized automatically on upload
+- Order status tracking (new → confirmed → preparing → on the way → delivered)
+- Discount code management and simple visit/cart statistics
+
+## Technical setup
+
+- **Frontend:** Plain HTML/CSS/JavaScript with no framework, so it loads fast.
+- **Supabase:** Database (PostgreSQL), authentication and photo storage. Security relies on **row-level security (RLS)** rules: customers only see their own orders, and admin rights are checked separately in the database.
+- **Demo mode:** Without a Supabase connection the site runs on browser storage, so it can be demoed in sales meetings without touching live data.
+- **Hosting:** Vercel, on the `floryaaydin.orhunserbetci.com` subdomain.

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import type { Locale } from "@/i18n/config";
 import type { Category, Project } from "@/lib/content";
+import { categories } from "@/lib/categories";
 import { ProjectRow } from "./ui";
 
 type Props = {
@@ -14,7 +15,7 @@ type Props = {
 
 export function ProjectFilter({ projects, locale, labels, emptyText }: Props) {
   const [active, setActive] = useState<"all" | Category>("all");
-  const filters = (["all", "web", "automation", "ai"] as const).map((key) => ({
+  const filters = (["all", ...categories] as const).map((key) => ({
     key,
     count: key === "all" ? projects.length : projects.filter((p) => p.category === key).length,
   }));

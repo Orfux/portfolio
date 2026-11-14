@@ -1,0 +1,42 @@
+export const metadata = {
+  title: "VFD devreye alırken kontrol listem",
+  summary: "Frekans invertörünü ilk kez çalıştırmadan önce ve sonra kontrol ettiğim parametreler ve sık yapılan hatalar.",
+  date: "2026-03-21",
+}
+
+Frekans invertörü (VFD) bir motoru yumuşak kalkışla çalıştırır, hızını ayarlar ve enerji tasarrufu sağlar. Ama yanlış parametrelerle motor ısınır, sürücü sürekli hataya düşer ya da mekanik zarar görür. Bir sürücüyü devreye alırken izlediğim sıra şu:
+
+## Enerji vermeden önce
+
+- **Etiket bilgileri:** Motorun gerilimini, akımını, frekansını, devrini ve gücünü bir kenara not edin.
+- **Bağlantı:** Motor yıldız mı üçgen mi bağlanmalı? Sürücü çıkış gerilimiyle uyumlu olmalı.
+- **Kablo:** Sürücü–motor arasında blendajlı kablo kullanın, blendajı iki uçtan da düzgün topraklayın. Çok uzun motor kablolarında çıkış filtresi gerekebilir.
+- **Giriş koruması:** Giriş sigortaları veya otomatı, sürücü kılavuzundaki değerlere göre seçilmiş olmalı.
+
+## Temel parametreler
+
+1. **Motor parametreleri:** Etiket değerlerini sürücüye girin.
+2. **Otomatik ayar (auto-tune):** Mümkünse motoru yükten ayırıp tam auto-tune, değilse duran motorla yapılan ayarı çalıştırın. Vektör kontrolün düzgün çalışması buna bağlıdır.
+3. **Kontrol kaynağı:** Start/stop ve hız referansı nereden gelecek? Tuş takımı, klemens ya da haberleşme (Modbus vb.).
+4. **Min/maks frekans:** Pompa ve fanlarda çok düşük hız soğutmayı bozabilir. Mekanik sistemin dayanabileceği maksimum hızı aşmayın.
+5. **Rampa süreleri:** Çok kısa hızlanma süresi aşırı akım hatasına, çok kısa yavaşlama süresi aşırı gerilim hatasına yol açar. Büyük ataletli yüklerde **frenleme direnci** gerekebilir.
+6. **Motor aşırı yük koruması:** Termik koruma değerini motorun nominal akımına göre ayarlayın.
+
+## İlk çalıştırma
+
+- Düşük frekansta (ör. 5–10 Hz) çalıştırıp **dönüş yönünü** kontrol edin. Yanlışsa sürücü çıkışındaki iki fazı değiştirin ya da yön parametresini kullanın.
+- Akımı izleyin. Boşta beklenmedik yüksek bir akım, bağlantı veya parametre hatasına işaret eder.
+- Hızı kademeli artırın, titreşim ve ses olup olmadığına bakın.
+
+## Sık görülen hatalar
+
+| Hata | Olası sebep |
+|---|---|
+| Hızlanırken aşırı akım | Rampa çok kısa, yük sıkışık, motor parametreleri yanlış |
+| Yavaşlarken aşırı gerilim | Yavaşlama rampası çok kısa, frenleme direnci yok |
+| Motor aşırı ısınıyor | Uzun süre düşük hızda çalışma, yanlış termik ayar |
+| Ölçümlerde/haberleşmede gürültü | Blendaj ve topraklama eksik, kablolar iç içe |
+
+## Son adım: yedek alın
+
+Devreye alma bittiğinde parametrelerin yedeğini alın ve projeye ekleyin. Sürücü bir gün değişirse aynı ayarları dakikalar içinde geri yükleyebilirsiniz.

@@ -1,0 +1,36 @@
+export const metadata = {
+  title: "Florya Aydın Çiçekçilik Sitesi",
+  summary: "Aydın Efeler'deki bir butik çiçekçi için online sipariş sitesi: ürün kataloğu, sepet, üyelik, indirim kodları ve yönetim paneli.",
+  date: "2026",
+  category: "web",
+  role: "Tasarım & Geliştirme",
+  tags: ["HTML/CSS/JS", "Supabase", "Vercel"],
+  highlight: "Canlıda: floryaaydin.orhunserbetci.com",
+  link: "https://floryaaydin.orhunserbetci.com",
+}
+
+![Florya Aydın ana sayfası](/sites/florya.png)
+
+## Proje hakkında
+
+Aydın Efeler'deki bir butik çiçekçinin müşterilerinin buketleri inceleyip online sipariş verebilmesi için uçtan uca bir web sitesi geliştirdim. Site `floryaaydin.orhunserbetci.com` adresinde yayında.
+
+## Özellikler
+
+**Müşteri tarafı**
+- Kategorilere ayrılmış ürün kataloğu (buketler, aranjmanlar, saksı çiçekleri, açılış çiçekleri…)
+- Sepet ve sipariş akışı, WhatsApp'tan sipariş seçeneği
+- İndirim kodu desteği (minimum tutar, kullanım limiti, tarih aralığı)
+- Üyelik: e-posta/şifre ile kayıt, Google/Facebook ile giriş, şifre sıfırlama, sipariş geçmişi ve profil
+
+**Yönetim paneli**
+- Ürün ekleme/düzenleme; fotoğraflar yüklenirken otomatik küçültülüyor
+- Sipariş durumu takibi (yeni → onaylandı → hazırlanıyor → yolda → teslim edildi)
+- İndirim kodu yönetimi ve basit ziyaret/sepet istatistikleri
+
+## Teknik yapı
+
+- **Arayüz:** Framework kullanmadan, sade HTML/CSS/JavaScript ile hızlı açılan bir site.
+- **Supabase:** Veritabanı (PostgreSQL), kimlik doğrulama ve fotoğraf depolama. Güvenlik **satır düzeyinde güvenlik (RLS)** kurallarıyla sağlanıyor: müşteri yalnızca kendi siparişlerini görüyor, yönetici yetkisi veritabanında ayrıca kontrol ediliyor.
+- **Demo modu:** Supabase bağlantısı yokken site tarayıcı depolamasıyla çalışıyor. Bu sayede satış görüşmelerinde canlı veriye dokunmadan gösterilebiliyor.
+- **Barındırma:** Vercel üzerinde, `floryaaydin.orhunserbetci.com` alt alan adında.

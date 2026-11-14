@@ -55,7 +55,7 @@ async function Post({ params }: Pick<PageProps<"/[lang]/blog/[slug]">, "params">
           </h1>
           <p className="mt-4 text-lg text-zinc-500 dark:text-zinc-400">{meta.summary}</p>
         </header>
-        <div className="prose prose-zinc dark:prose-invert prose-a:text-accent-600 dark:prose-a:text-accent-400 max-w-none">
+        <div className="prose prose-zinc dark:prose-invert prose-a:underline-offset-4 prose-a:decoration-zinc-400 max-w-none">
           <Content />
         </div>
       </article>

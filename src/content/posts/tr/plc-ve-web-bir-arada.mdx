@@ -1,23 +1,32 @@
 export const metadata = {
   title: "PLC verisini web arayüzüne taşımak",
-  summary: "OPC UA ile sahadaki veriyi tarayıcıda canlı göstermenin pratik yolu. (Örnek yazı)",
+  summary: "OPC UA ile sahadaki veriyi tarayıcıda canlı göstermenin pratik bir yolu: mimari, örnek kod ve dikkat edilmesi gerekenler.",
   date: "2025-10-12",
 }
 
-Sahadaki bir PLC'nin verisini tarayıcıda görmek artık sanıldığı kadar zor değil.
+Sahadaki bir PLC'nin verisini tarayıcıda görmek artık sanıldığı kadar zor değil. Klasik SCADA yazılımları hâlâ işin merkezinde, ama basit bir izleme ekranı, bir telefon bildirimi ya da yöneticiler için bir özet panosu için web teknolojileri çok pratik.
 
 ## Temel mimari
 
-1. PLC → **OPC UA** sunucusu
-2. Küçük bir ara servis (Node.js veya Python) veriyi okur
-3. WebSocket ile tarayıcıya canlı gönderir
+1. **PLC → OPC UA sunucusu:** Siemens S7-1500 gibi birçok modern PLC'de OPC UA sunucusu dahili olarak gelir. Eski cihazlarda ise bir ağ geçidi (gateway) kullanılır.
+2. **Ara servis:** Node.js veya Python ile yazılmış küçük bir servis, OPC UA'dan etiketleri okur.
+3. **Tarayıcı:** Servis, değerleri WebSocket üzerinden tarayıcıya canlı olarak iletir.
 
 ```ts
-// Örnek: her saniye bir etiketi oku ve yayınla
+// Her saniye bir etiketi oku ve bağlı tüm tarayıcılara gönder
 setInterval(async () => {
   const value = await session.read({ nodeId: "ns=3;s=Hat1.Hiz" });
   broadcast({ hat1Hiz: value.value.value });
 }, 1000);
 ```
 
-> Bu bir **örnek** yazıdır. Kendi yazınla değiştir.
+Gerçek bir uygulamada her saniye okumak yerine OPC UA'nın **abonelik (subscription)** özelliğini kullanmak daha verimli: değer değiştiğinde sunucu size haber verir.
+
+## Dikkat edilmesi gerekenler
+
+- **Güvenlik önce gelir.** PLC ağını doğrudan internete açmayın. Ara servis, OT ağı ile IT ağı arasında kontrollü bir köprü olmalı. OPC UA'nın sertifika tabanlı şifrelemesini kapatmayın.
+- **Okuma ile yazmayı ayırın.** İzleme ekranları yalnızca okuma yapmalı. Web'den PLC'ye komut göndermek ayrı yetkilendirme ve onay mekanizmaları ister.
+- **Bağlantı kopmalarını yönetin.** Ağ koptuğunda ekran "son bilinen değer"i göstermeli ve verinin eski olduğunu açıkça belirtmeli.
+- **Birim ve ölçeklemeyi tek yerde yapın.** Ham değerin ×10 mu ×100 mü olduğunu ara serviste çözün, ön yüz her zaman anlamlı değerle çalışsın.
+
+Bu yaklaşım SCADA'nın yerini almaz ama onu tamamlar: sahadaki veriyi, ihtiyacı olan herkese bir tarayıcı kadar yakın hale getirir.

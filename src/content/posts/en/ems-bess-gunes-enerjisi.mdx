@@ -1,0 +1,44 @@
+export const metadata = {
+  title: "EMS, BESS and solar: three concepts, one system",
+  summary: "How do a solar plant, battery storage and an energy management system work together? The basics, from an automation engineer's point of view.",
+  date: "2026-09-28",
+}
+
+The area I most want to grow in lately is energy systems. Solar (PV), battery energy storage (BESS) and the energy management systems (EMS) that run them are tightly linked. In this post I summarise the three concepts and how they work together.
+
+## Solar (PV)
+
+Solar panels produce variable power throughout the day: low in the morning, high at noon, zero in the evening. When a cloud passes, output can drop within seconds. That's the core issue: **production doesn't always line up with consumption.**
+
+## Battery energy storage (BESS)
+
+A BESS stores energy when there's a surplus and gives it back when needed. Its main parts:
+
+- **Battery modules:** Store energy chemically (today mostly LFP lithium).
+- **BMS (Battery Management System):** Monitors cell voltages, temperatures and state of charge (SoC) and protects the battery.
+- **PCS (Power Conversion System):** A bidirectional inverter converting the battery's DC to the grid's AC and back.
+
+BMS and EMS are often confused: **the BMS manages the inside of the battery**, **the EMS manages the battery's role in the system**.
+
+## Energy management system (EMS)
+
+The EMS is the system's "brain". It monitors PV output, consumption, battery state and grid conditions and answers one question: **should the battery charge, discharge or wait right now?**
+
+Typical EMS strategies:
+
+| Strategy | What it does |
+|---|---|
+| Self-consumption | Stores surplus PV during the day, uses it in the evening |
+| Peak shaving | Feeds loads from the battery during peaks to cut maximum grid demand |
+| Energy arbitrage | Charges in cheap hours, discharges in expensive ones |
+| Grid services | Helps with frequency and voltage balancing |
+
+While deciding, the EMS respects limits: the battery's SoC window, maximum charge/discharge power, temperature and battery lifetime.
+
+## Where the automation engineer comes in
+
+All of these systems have to talk to each other. PV inverters, BMS, PCS and meters usually expose data over **Modbus TCP**. In substations and large plants, protocols like **IEC 61850** and **DNP3** take over.
+
+Behind an EMS there are familiar things: collecting data from field devices, running control logic, managing alarms and showing everything on a SCADA screen. That's why PLC and SCADA experience transfers so naturally to the energy sector.
+
+Next, I plan to dig into IEC 61850 and BESS control strategies and share what I learn here.

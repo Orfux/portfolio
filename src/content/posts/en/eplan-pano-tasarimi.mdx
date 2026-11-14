@@ -1,0 +1,43 @@
+export const metadata = {
+  title: "8 rules for control panel design: from EPLAN drawing to assembly",
+  summary: "The rules I follow when drawing electrical projects — the ones that make assembly, commissioning and troubleshooting years later easier.",
+  date: "2026-02-16",
+}
+
+A good control panel isn't just one that works. It's one that the assembler can build easily, that can be tested quickly during commissioning, and that a technician can troubleshoot in five minutes from the drawings five years later. These are the rules I follow when drawing projects in EPLAN:
+
+## 1. Consistent device tagging
+
+Give every device a **function (=)**, **location (+)** and **device (-)** designation. A full reference like `=A1+P1-K12` instead of just `-K1` tells you immediately which section and which panel a device belongs to. Decide the tagging scheme at the start; changing it later is painful.
+
+## 2. Use cross-references
+
+When a relay coil is on one page and its contacts on others, EPLAN's cross-references link them. That's what ends the question "which relay does this contact belong to?".
+
+## 3. Wire and terminal numbers
+
+Number every wire and terminal and print them as a **terminal diagram**. On site, the terminal diagram is usually the page the assembler uses most.
+
+## 4. Separate power from signals
+
+230/400 V AC power cables shouldn't share a duct with 24 V DC signal and analog cables. Analog signals and communication lines (RS-485, Ethernet) in particular pick up noise near drive output cables.
+
+## 5. Leave spare capacity
+
+Don't fill cable ducts completely, and leave free space on DIN rails and terminals. Projects always grow during commissioning: one more sensor, one more relay, one more button.
+
+## 6. Account for heat
+
+Drives, power supplies and contactors produce heat. Estimate the total loss inside the panel and plan ventilation or fans from the start. Place drives low in the panel and keep heat-sensitive electronics away from them.
+
+## 7. Protection and grounding
+
+Size every circuit's fuse or breaker for its load current and cable cross-section. Collect PE connections on a dedicated bar and ground shielded cables through it.
+
+## 8. Keep the drawing and the panel identical
+
+Put every change made during commissioning into the drawings the same day. A panel that doesn't match its drawings is more dangerous than one with no drawings at all, because it misleads people.
+
+---
+
+EPLAN's biggest advantage is that it treats a drawing as **data**: the bill of materials, terminal diagrams, cable lists and labels are generated from the same project. Follow these rules and those generated outputs will be right too.

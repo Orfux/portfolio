@@ -59,7 +59,7 @@ async function Project({ params }: Pick<PageProps<"/[lang]/projects/[slug]">, "p
             {meta.title}
           </h1>
           {meta.highlight && (
-            <p className="mt-2 text-xl font-medium text-accent-600 dark:text-accent-400">{meta.highlight}</p>
+            <p className="mt-2 text-2xl font-light tracking-tight text-zinc-500 dark:text-zinc-400">{meta.highlight}</p>
           )}
           <p className="mt-4 text-lg text-zinc-500 dark:text-zinc-400">{meta.summary}</p>
 
@@ -89,7 +89,7 @@ async function Project({ params }: Pick<PageProps<"/[lang]/projects/[slug]">, "p
           )}
         </header>
 
-        <div className="prose prose-zinc dark:prose-invert prose-a:text-accent-600 dark:prose-a:text-accent-400 max-w-none">
+        <div className="prose prose-zinc dark:prose-invert prose-a:underline-offset-4 prose-a:decoration-zinc-400 max-w-none">
           <Content />
         </div>
       </article>

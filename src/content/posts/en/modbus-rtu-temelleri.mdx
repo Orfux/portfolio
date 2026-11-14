@@ -1,0 +1,52 @@
+export const metadata = {
+  title: "A quick intro to Modbus RTU: registers, addresses and common mistakes",
+  summary: "The most common protocol in the field, its addressing quirks and the RS-485 mistakes that waste the most time.",
+  date: "2025-11-03",
+}
+
+Modbus has been around since 1979. It is simple and supported by almost every device: temperature controllers, energy meters, drives, PLCs… If you need to talk to a device in the field, you will most likely start with Modbus.
+
+## The basic idea
+
+A Modbus RTU line has one **master** (client) and up to 247 **slaves** (servers). The master always starts the conversation: "device 3, read this many registers starting here", and the device answers. Slaves never send data on their own.
+
+The physical layer is usually **RS-485**: a two-wire (A/B), noise-resistant line that can run for hundreds of metres.
+
+## Four data types
+
+| Type | Size | Access | Read / write function |
+|---|---|---|---|
+| Coil | 1 bit | Read/write | 01 / 05, 15 |
+| Discrete input | 1 bit | Read only | 02 |
+| Input register | 16 bit | Read only | 04 |
+| Holding register | 16 bit | Read/write | 03 / 06, 16 |
+
+In practice you'll mostly use **03 (read holding registers)** and **06/16 (write registers)**.
+
+## Addressing: the off-by-one trap
+
+Manuals usually write addresses like `40001`. The `4` means holding register and `0001` is the ordinal number, but inside the protocol that register's address is **0**.
+
+So if the manual says `40101`, your software most likely needs **100**. If your values look "shifted by one", look here first.
+
+## 32-bit values and word order
+
+A register holds 16 bits. Energy (kWh) or floating-point values span two registers, and a device may send the **high word first** or the **low word first**. If you read an absurdly large number, swap the two registers and try again.
+
+## Checklist when wiring the line
+
+- **Baud rate, parity and stop bits** must match on every device (e.g. 9600, 8N1).
+- Every device needs a unique **slave ID**.
+- If **A/B** are swapped you get no answer at all. Vendors label A/B differently, so be ready to flip them.
+- Put a 120 Ω termination resistor at **both ends** of the line, not on the devices in between.
+- Wire the line as a **daisy chain**, avoid star topologies.
+- Use shielded twisted pair and ground the shield at **one point**.
+
+## When debugging
+
+1. First read a single device from a PC with a Modbus test tool. Make sure communication works before involving the PLC.
+2. Timeouts usually mean a physical or settings problem: cable, A/B, baud rate, slave ID.
+3. CRC errors point to noise, missing termination or a speed mismatch.
+4. If you get an answer but the value is nonsense, check address offset, word order and scaling (×10, ×100).
+
+Modbus is powerful because it is simple. Most problems come not from the protocol but from the cable and from misreading the register map.

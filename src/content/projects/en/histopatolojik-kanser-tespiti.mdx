@@ -1,0 +1,30 @@
+export const metadata = {
+  title: "Cancer Detection from Histopathological Images",
+  summary: "An end-to-end deep learning system that classifies lung and colon cancer subtypes: Macenko stain normalization and a ResNet-50 + EfficientNet-B3 ensemble.",
+  date: "2026-01",
+  category: "ai",
+  role: "Deep Learning",
+  tags: ["Python", "Deep Learning", "ResNet-50", "EfficientNet-B3"],
+  highlight: "Ensemble of two CNN architectures",
+}
+
+## About the project
+
+Histopathology is the microscopic examination of tissue samples. It takes pathologists a lot of time, and deep learning can support them by pre-classifying images quickly and consistently. Between September 2025 and January 2026 I built an end-to-end system that **classifies lung and colon cancer subtypes**.
+
+## Preprocessing: Macenko stain normalization
+
+Tissue samples are prepared in different labs with different stain intensities. The same tissue type can look dark purple in one image and light pink in another. If the model learns that colour difference as a "feature", it won't generalise.
+
+So I added **Macenko stain normalization** to the preprocessing pipeline. It separates the hematoxylin and eosin stain components of each image and rescales them to a common reference.
+
+## Model: ResNet-50 + EfficientNet-B3
+
+- **ResNet-50:** A proven architecture whose residual connections let deep networks train stably.
+- **EfficientNet-B3:** An architecture that scales depth, width and resolution in balance, efficient per parameter.
+
+I combined their outputs with **Softmax-based ensemble learning**. Different architectures make different mistakes, so averaging their probabilities is more reliable than a single model.
+
+## Result
+
+The system reached high accuracy with a low error rate. The project showed me that preprocessing matters as much as model choice, and that keeping results explainable is essential with medical images.

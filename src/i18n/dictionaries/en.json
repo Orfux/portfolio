@@ -1,6 +1,6 @@
 {
   "meta": {
-    "description": "I build websites, PLC/SCADA automation systems and LLM-powered AI projects."
+    "description": "Electrical & electronics engineer working on industrial automation, PLC/HMI-SCADA, energy systems and AI-assisted projects."
   },
   "nav": {
     "home": "Home",
@@ -18,7 +18,7 @@
     "close": "Close"
   },
   "home": {
-    "hero": "{name} is an **automation & software developer** building **websites**, **PLC/SCADA systems** and **AI projects**.",
+    "hero": "{name} is an **electrical & electronics engineer** working on **industrial automation**, **PLC/HMI-SCADA** and **AI-assisted systems**.",
     "photoAlt": "Photo of {name}",
     "featured": "Featured Project",
     "selected": "Selected Projects",
@@ -32,7 +32,8 @@
     "all": "All",
     "web": "Web",
     "automation": "PLC / SCADA",
-    "ai": "AI / LLM"
+    "energy": "Energy & Hardware",
+    "ai": "AI"
   },
   "projects": {
     "title": "Projects",

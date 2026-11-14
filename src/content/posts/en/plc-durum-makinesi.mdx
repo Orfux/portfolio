@@ -1,0 +1,50 @@
+export const metadata = {
+  title: "State machines in PLCs: safe step-by-step sequencing",
+  summary: "Why writing sequential processes like burners, doors and pumps as a state machine is safer and more readable than tangled ladder logic.",
+  date: "2025-12-08",
+}
+
+Once you start writing a sequential process (open the door, load, close the door, light the burner…) in plain ladder logic, you soon end up with dozens of interlocking contacts and the question "why did this turn on right now?". A **state machine** is one of the most robust ways out of that mess.
+
+## The idea
+
+The process consists of discrete **steps**, and **only one step is active at a time**. Each step defines two things:
+
+1. **What happens in this step?** (which outputs are on)
+2. **When do we move to the next step?** (the transition condition)
+
+Delta's STL/step structure, Siemens GRAPH, or a `CASE` block on an integer variable are all implementations of the same idea.
+
+```text
+S0  Idle           → Start pressed and safety OK  → S10
+S10 Door opening   → Door-open limit switch       → S20
+S20 Loading        → Operator confirmation        → S30
+S30 Door closing   → Door-closed limit switch     → S40
+S40 Burner 1       → Temperature > setpoint       → S50
+...
+```
+
+## Rules for writing it safely
+
+**1. Keep safety interlocks outside the steps.**
+Emergency stop, door safety and over-temperature should be evaluated in one place, **before** all steps. Whatever step is active, when safety breaks the outputs drop and the system returns to a safe step.
+
+**2. Give every step a timeout.**
+If the limit switch hasn't arrived 10 seconds into "door closing", something is wrong. The system shouldn't wait forever; it should raise an alarm and go to a safe state. This simple rule makes most field faults visible immediately.
+
+**3. Derive outputs from the step number.**
+Instead of setting/resetting an output in several places, write it in one line, like "pump = S40 active OR S50 active OR cooling delay". Then it's obvious why an output is on.
+
+**4. Model delayed shutdowns explicitly.**
+Behaviour like the cooling pump running on after the burner stops belongs in its own timer or step, not buried in hidden contacts.
+
+**5. Leave gaps in step numbers.**
+Counting 10, 20, 30 makes it easy to insert new steps later.
+
+## On the HMI
+
+State machines have a nice side effect: showing the active step on the HMI answers the operator's question "what is the system doing and what is it waiting for?". Adding a text for each step ("Door closing — waiting for limit switch") seriously shortens downtime.
+
+## Testing before the field
+
+State machines are very well suited to simulation testing. You can toggle inputs by hand and try every transition, timeout and safety trip one by one. In my medical waste incinerator project I tested the logic this way in simulation; finding the burner output and phase transition bugs before going on site made a big difference in both time and safety.
