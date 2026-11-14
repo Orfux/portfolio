@@ -30,6 +30,8 @@ export async function generateMetadata(): Promise<Metadata> {
       template: `%s — ${site.name}`,
     },
     description: t.meta.description,
+    // Google Search Console sahiplik doğrulaması (ayrıca public/google*.html dosyası var).
+    verification: { google: "ALYkGYJ7PQeGCzo48GqwuP4fT4JuCVoIYLmeodZ-5rk" },
     authors: [{ name: site.name, url: site.url }],
     creator: site.name,
     ...pageMeta({ locale, description: t.meta.description }),
