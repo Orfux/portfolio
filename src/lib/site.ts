@@ -10,7 +10,7 @@ export const site = {
   /** Kenar çubuğunun üstündeki marka yazısı: kalın + soluk kısım */
   brand: { strong: "orhun", dim: "serbetci.com" },
   /** Ana sayfadaki yuvarlak fotoğraf. public/ altına koyup yolunu yaz, ör. "/me.jpg". Boşsa baş harf gösterilir. */
-  photo: "",
+  photo: "/me.jpg",
   url: "https://orhunserbetci.com",
   links: {
     email: "orhunsrbtc@gmail.com",

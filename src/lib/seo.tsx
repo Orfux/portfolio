@@ -61,6 +61,7 @@ export function personJsonLd(locale: Locale) {
     "@id": personId,
     name: site.name,
     url: site.url,
+    ...(site.photo && { image: new URL(site.photo, site.url).toString() }),
     email: `mailto:${site.links.email}`,
     jobTitle: site.title[locale],
     description:
