@@ -8,20 +8,18 @@
     "projects": "Projeler",
     "blog": "Yazılar",
     "sites": "Sitelerim",
-    "menu": "Menü",
-    "close": "Kapat",
+    "browse": "Gezin",
     "connect": "Bağlantı",
-    "shortcutsHint": "Klavye kısayolları: harfe basarak sayfalar arasında gezinebilirsin."
-  },
-  "greeting": {
-    "default": "Merhaba",
-    "morning": "Günaydın",
-    "afternoon": "İyi günler",
-    "evening": "İyi akşamlar",
-    "night": "İyi geceler"
+    "email": "E-posta",
+    "copied": "Kopyalandı",
+    "collapse": "Kenar çubuğunu gizle",
+    "expand": "Kenar çubuğunu göster",
+    "menu": "Menü",
+    "close": "Kapat"
   },
   "home": {
-    "intro": "web siteleri, PLC/SCADA otomasyon sistemleri ve büyük dil modelleriyle (LLM) çalışan yapay zekâ projeleri geliştiriyor. Sahadaki makineden tarayıcıdaki arayüze kadar uçtan uca çözümler üretmeyi seviyor.",
+    "hero": "{name}, **web siteleri**, **PLC/SCADA sistemleri** ve **yapay zekâ projeleri** geliştiren bir **otomasyon ve yazılım geliştiricisi**.",
+    "photoAlt": "{name} fotoğrafı",
     "featured": "Öne Çıkan Proje",
     "selected": "Seçili Projeler",
     "allProjects": "Tüm projeler",
@@ -58,17 +56,19 @@
   },
   "sites": {
     "title": "Sitelerim",
-    "description": "Geliştirdiğim ve yayında olan diğer sitelerim."
+    "description": "Geliştirdiğim ve yayında olan diğer sitelerim.",
+    "visit": "Siteyi aç"
   },
   "footer": {
     "built": "Next.js ile tasarlandı ve geliştirildi."
   },
   "theme": {
-    "toggle": "Açık/koyu temayı değiştir"
+    "dark": "Koyu",
+    "light": "Açık",
+    "auto": "Oto"
   },
   "language": {
-    "switchLabel": "Switch to English",
-    "short": "EN"
+    "name": "English"
   },
   "notFound": {
     "title": "Sayfa bulunamadı",

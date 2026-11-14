@@ -1,20 +1,18 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
-/* Koyu tema <html class="dark"> ile kontrol edilir (kullanıcı seçebilsin diye). */
+/* Koyu tema <html class="dark"> ile kontrol edilir (Koyu / Açık / Oto seçimi). */
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme inline {
-  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+  --font-sans: var(--font-fira-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-fira-code), ui-monospace, monospace;
 }
 
 @theme {
-  /* Vurgu rengi: endüstriyel turuncu */
-  --color-accent-50: oklch(0.98 0.02 60);
-  --color-accent-500: oklch(0.7 0.17 50);
-  --color-accent-600: oklch(0.62 0.17 45);
-  --color-accent-400: oklch(0.78 0.15 55);
+  /* Referanstaki gibi biraz sıcak, nötr koyu tonlar */
+  --color-zinc-900: #1c1c1e;
+  --color-zinc-950: #0c0c0c;
 }
 
 :root {
@@ -29,10 +27,21 @@ body {
 }
 
 ::selection {
-  @apply bg-accent-500/25;
+  @apply bg-zinc-900/15 dark:bg-white/20;
 }
 
-/* Klavye kısayolu ipucu harfi */
-kbd {
-  @apply font-mono text-[0.65rem] text-zinc-400 dark:text-zinc-600;
+/*
+ * Kenar çubuğunu gizleme (S tuşu / panel düğmesi). Katmansız kurallar
+ * Tailwind yardımcılarını ezer; yalnızca masaüstünde geçerli.
+ */
+@media (min-width: 64rem) {
+  html[data-sidebar="closed"] .sidebar {
+    translate: -110% 0;
+  }
+  html[data-sidebar="closed"] .main-area {
+    padding-left: 0;
+  }
+  html[data-sidebar="closed"] .sidebar-open-btn {
+    display: grid;
+  }
 }

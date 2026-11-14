@@ -1,15 +1,19 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Fira_Code, Fira_Sans } from "next/font/google";
 import "../globals.css";
 import { locales } from "@/i18n/config";
 import { getDictionary, getLocale } from "@/i18n/dictionaries";
 import { site } from "@/lib/site";
-import { Header } from "@/components/header";
+import { bootScript } from "@/lib/theme";
+import { SiteSidebar } from "@/components/site-sidebar";
 import { Footer } from "@/components/footer";
-import { themeScript } from "@/components/theme-toggle";
 
-const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin", "latin-ext"] });
-const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin", "latin-ext"] });
+const firaSans = Fira_Sans({
+  variable: "--font-fira-sans",
+  subsets: ["latin", "latin-ext"],
+  weight: ["300", "400", "500", "600"],
+});
+const firaCode = Fira_Code({ variable: "--font-fira-code", subsets: ["latin", "latin-ext"] });
 
 export function generateStaticParams() {
   return locales.map((lang) => ({ lang }));
@@ -37,15 +41,17 @@ export default async function RootLayout({ children }: LayoutProps<"/[lang]">) {
     <html
       lang={locale}
       suppressHydrationWarning
-      className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      className={`${firaSans.variable} ${firaCode.variable} antialiased`}
     >
       <head>
-        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+        <script dangerouslySetInnerHTML={{ __html: bootScript }} />
       </head>
-      <body className="flex min-h-dvh flex-col font-sans">
-        <Header />
-        <main className="flex-1">{children}</main>
-        <Footer />
+      <body className="font-sans">
+        <SiteSidebar />
+        <div className="main-area flex min-h-dvh flex-col transition-[padding] duration-300 lg:pl-72">
+          <main className="flex-1">{children}</main>
+          <Footer />
+        </div>
       </body>
     </html>
   );

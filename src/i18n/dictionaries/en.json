@@ -8,20 +8,18 @@
     "projects": "Projects",
     "blog": "Posts",
     "sites": "Sites",
-    "menu": "Menu",
-    "close": "Close",
+    "browse": "Browse",
     "connect": "Connect",
-    "shortcutsHint": "Keyboard shortcuts: press a letter to jump between pages."
-  },
-  "greeting": {
-    "default": "Hello",
-    "morning": "Good Morning",
-    "afternoon": "Good Afternoon",
-    "evening": "Good Evening",
-    "night": "Good Night"
+    "email": "Email",
+    "copied": "Copied",
+    "collapse": "Hide sidebar",
+    "expand": "Show sidebar",
+    "menu": "Menu",
+    "close": "Close"
   },
   "home": {
-    "intro": "builds websites, PLC/SCADA automation systems and AI projects powered by large language models (LLMs). The focus: end-to-end solutions — from the machine on the shop floor to the interface in the browser.",
+    "hero": "{name} is an **automation & software developer** building **websites**, **PLC/SCADA systems** and **AI projects**.",
+    "photoAlt": "Photo of {name}",
     "featured": "Featured Project",
     "selected": "Selected Projects",
     "allProjects": "All projects",
@@ -58,17 +56,19 @@
   },
   "sites": {
     "title": "Sites",
-    "description": "Other sites I've built that are live."
+    "description": "Other sites I've built that are live.",
+    "visit": "Open site"
   },
   "footer": {
     "built": "Designed & built with Next.js."
   },
   "theme": {
-    "toggle": "Toggle light/dark theme"
+    "dark": "Dark",
+    "light": "Light",
+    "auto": "Auto"
   },
   "language": {
-    "switchLabel": "Türkçeye geç",
-    "short": "TR"
+    "name": "Türkçe"
   },
   "notFound": {
     "title": "Page not found",
