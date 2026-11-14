@@ -1,0 +1,23 @@
+export const metadata = {
+  title: "PLC verisini web arayüzüne taşımak",
+  summary: "OPC UA ile sahadaki veriyi tarayıcıda canlı göstermenin pratik yolu. (Örnek yazı)",
+  date: "2025-10-12",
+}
+
+Sahadaki bir PLC'nin verisini tarayıcıda görmek artık sanıldığı kadar zor değil.
+
+## Temel mimari
+
+1. PLC → **OPC UA** sunucusu
+2. Küçük bir ara servis (Node.js veya Python) veriyi okur
+3. WebSocket ile tarayıcıya canlı gönderir
+
+```ts
+// Örnek: her saniye bir etiketi oku ve yayınla
+setInterval(async () => {
+  const value = await session.read({ nodeId: "ns=3;s=Hat1.Hiz" });
+  broadcast({ hat1Hiz: value.value.value });
+}, 1000);
+```
+
+> Bu bir **örnek** yazıdır. Kendi yazınla değiştir.

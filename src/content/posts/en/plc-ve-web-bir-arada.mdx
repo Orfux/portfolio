@@ -1,0 +1,23 @@
+export const metadata = {
+  title: "Bringing PLC data to a web interface",
+  summary: "A practical way to show live shop-floor data in the browser with OPC UA. (Sample post)",
+  date: "2025-10-12",
+}
+
+Showing a PLC's data in a browser is no longer as hard as it sounds.
+
+## The basic architecture
+
+1. PLC → **OPC UA** server
+2. A small bridge service (Node.js or Python) reads the data
+3. It pushes updates to the browser over WebSocket
+
+```ts
+// Example: read a tag every second and broadcast it
+setInterval(async () => {
+  const value = await session.read({ nodeId: "ns=3;s=Line1.Speed" });
+  broadcast({ line1Speed: value.value.value });
+}, 1000);
+```
+
+> This is a **sample** post. Replace it with your own.

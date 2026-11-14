@@ -1,0 +1,78 @@
+{
+  "meta": {
+    "description": "I build websites, PLC/SCADA automation systems and LLM-powered AI projects."
+  },
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "projects": "Projects",
+    "blog": "Posts",
+    "sites": "Sites",
+    "menu": "Menu",
+    "close": "Close",
+    "connect": "Connect",
+    "shortcutsHint": "Keyboard shortcuts: press a letter to jump between pages."
+  },
+  "greeting": {
+    "default": "Hello",
+    "morning": "Good Morning",
+    "afternoon": "Good Afternoon",
+    "evening": "Good Evening",
+    "night": "Good Night"
+  },
+  "home": {
+    "intro": "builds websites, PLC/SCADA automation systems and AI projects powered by large language models (LLMs). The focus: end-to-end solutions — from the machine on the shop floor to the interface in the browser.",
+    "featured": "Featured Project",
+    "selected": "Selected Projects",
+    "allProjects": "All projects",
+    "latestPosts": "Latest Posts",
+    "allPosts": "All posts",
+    "sites": "My Other Sites",
+    "allSites": "All sites"
+  },
+  "categories": {
+    "all": "All",
+    "web": "Web",
+    "automation": "PLC / SCADA",
+    "ai": "AI / LLM"
+  },
+  "projects": {
+    "title": "Projects",
+    "description": "Work across web, industrial automation and artificial intelligence.",
+    "year": "Year",
+    "role": "Role",
+    "stack": "Stack",
+    "visit": "Visit project",
+    "confidential": "Some details and visuals are omitted for client confidentiality.",
+    "back": "All projects",
+    "empty": "No projects in this category yet."
+  },
+  "blog": {
+    "title": "Posts",
+    "description": "Notes on automation, software and AI.",
+    "back": "All posts",
+    "empty": "No posts yet."
+  },
+  "about": {
+    "title": "About"
+  },
+  "sites": {
+    "title": "Sites",
+    "description": "Other sites I've built that are live."
+  },
+  "footer": {
+    "built": "Designed & built with Next.js."
+  },
+  "theme": {
+    "toggle": "Toggle light/dark theme"
+  },
+  "language": {
+    "switchLabel": "Türkçeye geç",
+    "short": "TR"
+  },
+  "notFound": {
+    "title": "Page not found",
+    "text": "The page you're looking for may have moved or never existed.",
+    "back": "Back to home"
+  }
+}

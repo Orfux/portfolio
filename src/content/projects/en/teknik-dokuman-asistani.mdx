@@ -1,0 +1,21 @@
+export const metadata = {
+  title: "Technical Docs Assistant",
+  summary: "An LLM assistant that answers questions over machine manuals and cites its sources. (Sample content)",
+  date: "2025-09",
+  category: "ai",
+  role: "Developer",
+  tags: ["LLM", "RAG", "Python", "Vector DB"],
+  highlight: "Fault lookup time cut in half",
+}
+
+## Idea
+
+Maintenance teams searched hundreds of pages of PDF manuals for fault codes. The assistant understands the question, finds the right page and answers **with its source**.
+
+## How it works
+
+1. Manuals are split into chunks and stored in a vector database.
+2. For each question the most relevant chunks are retrieved (RAG).
+3. The LLM answers only from those chunks and cites page numbers.
+
+> This is **sample** project text.
