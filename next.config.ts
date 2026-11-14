@@ -5,6 +5,22 @@ import createMDX from "@next/mdx";
 const FLORYA = "https://floryaaydin.orhunserbetci.com";
 
 const nextConfig: NextConfig = {
+  poweredByHeader: false,
+  // Temel güvenlik başlıkları (tüm sayfalar).
+  async headers() {
+    return [
+      {
+        source: "/:path*",
+        headers: [
+          { key: "X-Content-Type-Options", value: "nosniff" },
+          { key: "X-Frame-Options", value: "DENY" },
+          { key: "Content-Security-Policy", value: "frame-ancestors 'none'" },
+          { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+          { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
+        ],
+      },
+    ];
+  },
   // Eski orhunserbetci.com/... Florya linklerini subdomain'e taşı (query korunur).
   async redirects() {
     return [
