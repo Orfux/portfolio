@@ -24,7 +24,8 @@ const nextConfig: NextConfig = {
   // Eski orhunserbetci.com/... Florya linklerini subdomain'e taşı (query korunur).
   async redirects() {
     return [
-      { source: "/:page(.*\\.html)", destination: `${FLORYA}/:page`, permanent: true },
+      // google*.html (Search Console doğrulama dosyası) hariç tutulur.
+      { source: "/:page((?!google)[^/]*\\.html)", destination: `${FLORYA}/:page`, permanent: true },
       { source: "/hesabim", destination: `${FLORYA}/hesabim`, permanent: true },
       { source: "/assets/:path*", destination: `${FLORYA}/assets/:path*`, permanent: true },
     ];
