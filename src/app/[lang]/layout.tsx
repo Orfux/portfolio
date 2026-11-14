@@ -5,6 +5,7 @@ import { locales } from "@/i18n/config";
 import { getDictionary, getLocale } from "@/i18n/dictionaries";
 import { site } from "@/lib/site";
 import { bootScript } from "@/lib/theme";
+import { JsonLd, pageMeta, personJsonLd } from "@/lib/seo";
 import { SiteSidebar } from "@/components/site-sidebar";
 import { Footer } from "@/components/footer";
 
@@ -29,9 +30,9 @@ export async function generateMetadata(): Promise<Metadata> {
       template: `%s — ${site.name}`,
     },
     description: t.meta.description,
-    alternates: {
-      languages: { tr: "/tr", en: "/en" },
-    },
+    authors: [{ name: site.name, url: site.url }],
+    creator: site.name,
+    ...pageMeta({ locale, description: t.meta.description }),
   };
 }
 
@@ -47,6 +48,7 @@ export default async function RootLayout({ children }: LayoutProps<"/[lang]">) {
         <script dangerouslySetInnerHTML={{ __html: bootScript }} />
       </head>
       <body className="font-sans">
+        <JsonLd data={personJsonLd(locale)} />
         <SiteSidebar />
         <div className="main-area flex min-h-dvh flex-col transition-[padding] duration-300 lg:pl-72">
           <main className="flex-1">{children}</main>

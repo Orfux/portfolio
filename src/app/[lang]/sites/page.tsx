@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import { getDictionary, getLocale } from "@/i18n/dictionaries";
 import { otherSites } from "@/lib/site";
+import { pageMeta } from "@/lib/seo";
 import { Container, PageHeader, SiteCard } from "@/components/ui";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const t = await getDictionary();
-  return { title: t.sites.title, description: t.sites.description };
+  const locale = await getLocale();
+  const t = await getDictionary(locale);
+  return pageMeta({ locale, path: "/sites", title: t.sites.title, description: t.sites.description });
 }
 
 export default async function SitesPage() {

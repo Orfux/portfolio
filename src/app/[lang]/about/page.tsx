@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import { getDictionary, getLocale } from "@/i18n/dictionaries";
 import { loadAbout } from "@/lib/content";
+import { pageMeta } from "@/lib/seo";
 import { Container, PageHeader } from "@/components/ui";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const t = await getDictionary();
-  return { title: t.about.title };
+  const locale = await getLocale();
+  const t = await getDictionary(locale);
+  return pageMeta({ locale, path: "/about", title: t.about.title, description: t.meta.description });
 }
 
 export default async function AboutPage() {

@@ -6,6 +6,8 @@ import { getDictionary, getLocale } from "@/i18n/dictionaries";
 import { locales } from "@/i18n/config";
 import { getProjects, loadProject } from "@/lib/content";
 import { formatDate } from "@/lib/format";
+import { absUrl, JsonLd, pageMeta, personId } from "@/lib/seo";
+import { site } from "@/lib/site";
 import { Container, Tag } from "@/components/ui";
 
 export async function generateStaticParams() {
@@ -16,9 +18,16 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: PageProps<"/[lang]/projects/[slug]">): Promise<Metadata> {
   const { slug } = await params;
-  const project = await loadProject(await getLocale(), slug);
+  const locale = await getLocale();
+  const project = await loadProject(locale, slug);
   if (!project) return {};
-  return { title: project.meta.title, description: project.meta.summary };
+  return pageMeta({
+    locale,
+    path: `/projects/${slug}`,
+    title: project.meta.title,
+    description: project.meta.summary,
+    type: "article",
+  });
 }
 
 // Build'de listelenmeyen bir adres açılırsa Suspense yedeği anında gösterilir,
@@ -48,6 +57,20 @@ async function Project({ params }: Pick<PageProps<"/[lang]/projects/[slug]">, "p
 
   return (
     <Container>
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "CreativeWork",
+          name: meta.title,
+          description: meta.summary,
+          dateCreated: meta.date,
+          inLanguage: locale,
+          keywords: meta.tags.join(", "),
+          url: absUrl(`/${locale}/projects/${meta.slug}`),
+          creator: { "@id": personId, "@type": "Person", name: site.name },
+          ...(meta.link && { sameAs: meta.link }),
+        }}
+      />
       <article className="pt-12">
         <Link href={`/${locale}/projects`} className="text-sm text-zinc-500 transition hover:text-zinc-900 dark:hover:text-zinc-100">
           ← {t.projects.back}

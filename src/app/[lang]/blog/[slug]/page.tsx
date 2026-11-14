@@ -6,6 +6,8 @@ import { getDictionary, getLocale } from "@/i18n/dictionaries";
 import { locales } from "@/i18n/config";
 import { getPosts, loadPost } from "@/lib/content";
 import { formatDate } from "@/lib/format";
+import { absUrl, JsonLd, pageMeta, personId } from "@/lib/seo";
+import { site } from "@/lib/site";
 import { Container } from "@/components/ui";
 
 export async function generateStaticParams() {
@@ -16,9 +18,17 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: PageProps<"/[lang]/blog/[slug]">): Promise<Metadata> {
   const { slug } = await params;
-  const post = await loadPost(await getLocale(), slug);
+  const locale = await getLocale();
+  const post = await loadPost(locale, slug);
   if (!post) return {};
-  return { title: post.meta.title, description: post.meta.summary };
+  return pageMeta({
+    locale,
+    path: `/blog/${slug}`,
+    title: post.meta.title,
+    description: post.meta.summary,
+    type: "article",
+    publishedTime: post.meta.date,
+  });
 }
 
 // Build'de listelenmeyen bir adres açılırsa Suspense yedeği anında gösterilir,
@@ -42,6 +52,18 @@ async function Post({ params }: Pick<PageProps<"/[lang]/blog/[slug]">, "params">
 
   return (
     <Container>
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "BlogPosting",
+          headline: meta.title,
+          description: meta.summary,
+          datePublished: meta.date,
+          inLanguage: locale,
+          url: absUrl(`/${locale}/blog/${meta.slug}`),
+          author: { "@id": personId, "@type": "Person", name: site.name },
+        }}
+      />
       <article className="pt-12">
         <Link href={`/${locale}/blog`} className="text-sm text-zinc-500 transition hover:text-zinc-900 dark:hover:text-zinc-100">
           ← {t.blog.back}
