@@ -54,6 +54,12 @@ Proje kategorileri: `automation`, `energy`, `ai`, `web` (`src/lib/categories.ts`
 - **Florya Aydın** sitesinin kodu bu depoda değil (ayrı Vercel projesi). Supabase projesi `ksrhxhkpieuwapylkyqe`; Site URL ve Redirect URL'leri subdomain'e göre güncellendi.
 - `next.config.ts`: eski `orhunserbetci.com/*.html`, `/hesabim`, `/assets/*` linklerini Florya subdomain'ine 308 yönlendirir; güvenlik başlıkları burada.
 
+## SEO / yapay zekâ araması
+
+- `src/lib/seo.tsx`: `pageMeta()` (canonical, hreflang, OpenGraph, Twitter) — her yeni sayfanın `generateMetadata`'sı bunu kullanmalı. `personJsonLd()` layout'ta; yazılarda `BlogPosting`, projelerde `CreativeWork` JSON-LD var.
+- `src/app/robots.ts`, `src/app/sitemap.ts`, `src/app/llms.txt/route.ts` içerikten otomatik üretilir; yeni proje/yazı ekleyince elle güncelleme gerekmez.
+- `public/og.png` paylaşım görseli (ana sayfanın 1200×630 ekran görüntüsü). Fotoğraf eklenince yeniden üret.
+
 ## Doğrulama
 
 - `npm run build` ve `npm run lint` temiz olmalı.
