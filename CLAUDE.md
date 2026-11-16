@@ -66,9 +66,17 @@ Proje kategorileri: `automation`, `energy`, `ai`, `web` (`src/lib/categories.ts`
 - Görsel kontrol: kurulu Edge + `playwright-core` (`chromium.launch({ channel: "msedge" })`), projeyi kirletmemek için scratch klasöründe kur.
 - İlk bilgisayarda internet sağlayıcısı `*.vercel.app` adreslerini engelliyordu; canlıyı `curl --resolve orhunserbetci.com:443:216.198.79.1` ile test et.
 
+## Piksel karakter (PixelBuddy)
+
+- `src/components/pixel-buddy.tsx`: sayfanın altında yürür, arada durup selam verir, tıklanınca selam verir; `prefers-reduced-motion`'da durur.
+- Varlıklar `public/buddy/`: `walk.png` (6 kare × 96×192, sağa bakan), `turn.png` (3/4 durma pozu). Ekranda 48×96 gösterilir.
+- Kullanıcı kareleri ChatGPT ile üretiyor; **kendin kare üretme/çizme** ("hayır üretme, ne lazımsa söyle" dedi). Ham görseller AI çıktısı: alfa eşikle (≥128), kareleri sütun projeksiyonuyla ayır, kafa merkezi + ayak çizgisine hizala, alan ortalamasıyla 96×192'ye küçült.
+- **El sallama kareleri bekleniyor** (`wave.png`, önden 4 kare). Gelince `public/buddy/wave.png` olarak koy ve bileşendeki `WAVE_FRAMES` değerini ayarla.
+
 ## Açık işler
 
-- Kullanıcı diğer projelerin ekran görüntülerini/bilgilerini ve bir fotoğraf gönderecek (`site.photo`).
+- Kullanıcı diğer projelerin ekran görüntülerini/bilgilerini gönderecek. (Fotoğraf eklendi: `public/me.jpg`.)
+- El sallama sprite'ı (yukarıya bak).
 - Florya'nın kendi `sitemap.xml`'i hâlâ `orhunserbetci.com/...` adreslerini gösteriyor (Florya deposunda düzeltilmeli).
 - Vercel ↔ GitHub bağlantısı; Vercel hesabında 2FA açılması önerildi.
 - Tıbbi atık fırını ("2025") ve Florya ("2026") proje tarihleri tahmini; kullanıcı onaylamadı.
