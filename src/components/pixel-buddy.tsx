@@ -6,14 +6,18 @@ import { useEffect, useRef, useState } from "react";
  * Sayfanın altında yürüyen piksel karakter.
  * Varlıklar: public/buddy/walk.png (6 kare yan yana, her kare 96×192),
  *            public/buddy/turn.png (durma pozu, 96×192),
- *            public/buddy/wave.png (isteğe bağlı: WAVE_FRAMES kare el sallama).
- * Ekranda 2 kat küçük gösterilir (48×96) — Retina'da net görünsün diye.
+ *            public/buddy/wave.png (4 kare el sallama, her kare 128×192 — kaldırılan
+ *            kol sığsın diye daha geniş; kafa yürüme kareleriyle aynı noktada).
+ * Ekranda 2 kat küçük gösterilir (48×96 / 64×96) — Retina'da net görünsün diye.
  */
 const W = 48;
 const H = 96;
+const WAVE_W = 64;
 const WALK_FRAMES = 6;
-const WAVE_FRAMES = 0; // wave.png eklenince kare sayısını yaz (ör. 4)
+// Kol kalkar → sallar → iner. Kare numaraları wave.png içindeki sıra (0'dan başlar).
+const WAVE_SEQ = [0, 1, 2, 3, 2, 1, 2, 3, 2, 1, 0];
 const FRAME_MS = 115;
+const WAVE_MS = 150;
 const SPEED = 40; // px/sn
 
 const rand = (a: number, b: number) => a + Math.random() * (b - a);
@@ -29,6 +33,9 @@ export function PixelBuddy({ hello, label }: { hello: string; label: string }) {
     const track = trackRef.current, mover = moverRef.current, sprite = spriteRef.current;
     if (!track || !mover || !sprite) return;
 
+    // İlk selamda görsel gecikmesin diye önceden yükle.
+    for (const src of ["/buddy/wave.png", "/buddy/turn.png"]) new Image().src = src;
+
     const maxX = () => Math.max(0, track.clientWidth - W);
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -43,18 +50,22 @@ export function PixelBuddy({ hello, label }: { hello: string; label: string }) {
 
     const draw = () => {
       mover.style.transform = `translateX(${Math.round(x)}px)`;
-      sprite.style.transform = `scaleX(${dir})`;
+      // Önden el sallarken çevirme; yürürken yöne göre çevir.
+      sprite.style.transform = `scaleX(${mode === "greet" ? 1 : dir})`;
     };
-    const show = (img: string, f: number) => {
+    const show = (img: string, f: number, cw = W) => {
       sprite.style.backgroundImage = `url(${img})`;
-      sprite.style.backgroundPosition = `${-f * W}px 0`;
+      sprite.style.backgroundPosition = `${-f * cw}px 0`;
+      // Geniş kareler ortalı dursun (kafa her iki sette aynı noktada).
+      sprite.style.width = `${cw}px`;
+      sprite.style.left = `${(W - cw) / 2}px`;
     };
 
     const greet = (now = performance.now()) => {
       mode = "greet";
-      until = now + (WAVE_FRAMES ? 2800 : 2400);
       frame = 0;
-      if (!WAVE_FRAMES) show("/buddy/turn.png", 0);
+      until = now + WAVE_SEQ.length * WAVE_MS + 300;
+      show("/buddy/wave.png", WAVE_SEQ[0], WAVE_W);
       setGreeting(true);
     };
     const walk = (now: number) => {
@@ -74,7 +85,7 @@ export function PixelBuddy({ hello, label }: { hello: string; label: string }) {
     const tick = (now: number) => {
       const dt = Math.min(0.05, (now - last) / 1000);
       last = now;
-      const nextFrame = now - lastFrame > FRAME_MS;
+      const nextFrame = now - lastFrame > (mode === "walk" ? FRAME_MS : WAVE_MS);
       if (nextFrame) lastFrame = now;
 
       if (mode === "walk") {
@@ -84,8 +95,11 @@ export function PixelBuddy({ hello, label }: { hello: string; label: string }) {
         if (nextFrame) { frame = (frame + 1) % WALK_FRAMES; show("/buddy/walk.png", frame); }
         if (now > until) greet(now);
       } else {
-        if (WAVE_FRAMES && nextFrame) { frame = (frame + 1) % WAVE_FRAMES; show("/buddy/wave.png", frame); }
-        if (now > until) walk(now);
+        if (nextFrame && frame < WAVE_SEQ.length - 1) {
+          frame++;
+          show("/buddy/wave.png", WAVE_SEQ[frame], WAVE_W);
+        }
+        if (now > until) { walk(now); show("/buddy/walk.png", 0); }
       }
       draw();
       raf = requestAnimationFrame(tick);
@@ -124,8 +138,8 @@ export function PixelBuddy({ hello, label }: { hello: string; label: string }) {
           aria-label={label}
           title={label}
           onClick={() => greetRef.current()}
-          className="pointer-events-auto absolute inset-0 cursor-pointer bg-no-repeat dark:drop-shadow-[0_0_1px_rgba(255,255,255,0.55)]"
-          style={{ backgroundSize: `auto ${H}px` }}
+          className="pointer-events-auto absolute top-0 cursor-pointer bg-no-repeat dark:drop-shadow-[0_0_1px_rgba(255,255,255,0.55)]"
+          style={{ backgroundSize: `auto ${H}px`, width: W, height: H, left: 0 }}
         />
       </div>
     </div>

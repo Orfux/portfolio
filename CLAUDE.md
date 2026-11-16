@@ -71,12 +71,11 @@ Proje kategorileri: `automation`, `energy`, `ai`, `web` (`src/lib/categories.ts`
 - `src/components/pixel-buddy.tsx`: sayfanın altında yürür, arada durup selam verir, tıklanınca selam verir; `prefers-reduced-motion`'da durur.
 - Varlıklar `public/buddy/`: `walk.png` (6 kare × 96×192, sağa bakan), `turn.png` (3/4 durma pozu). Ekranda 48×96 gösterilir.
 - Kullanıcı kareleri ChatGPT ile üretiyor; **kendin kare üretme/çizme** ("hayır üretme, ne lazımsa söyle" dedi). Ham görseller AI çıktısı: alfa eşikle (≥128), kareleri sütun projeksiyonuyla ayır, kafa merkezi + ayak çizgisine hizala, alan ortalamasıyla 96×192'ye küçült.
-- **El sallama kareleri bekleniyor** (`wave.png`, önden 4 kare). Gelince `public/buddy/wave.png` olarak koy ve bileşendeki `WAVE_FRAMES` değerini ayarla.
+- `wave.png`: önden 4 kare el sallama, kareler 128×192 (kaldırılan kol sığsın diye geniş; kafa yürüme kareleriyle aynı x'te). Oynatma sırası bileşendeki `WAVE_SEQ`.
 
 ## Açık işler
 
 - Kullanıcı diğer projelerin ekran görüntülerini/bilgilerini gönderecek. (Fotoğraf eklendi: `public/me.jpg`.)
-- El sallama sprite'ı (yukarıya bak).
 - Florya'nın kendi `sitemap.xml`'i hâlâ `orhunserbetci.com/...` adreslerini gösteriyor (Florya deposunda düzeltilmeli).
 - Vercel ↔ GitHub bağlantısı; Vercel hesabında 2FA açılması önerildi.
 - Tıbbi atık fırını ("2025") ve Florya ("2026") proje tarihleri tahmini; kullanıcı onaylamadı.
