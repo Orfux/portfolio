@@ -71,6 +71,10 @@
   "language": {
     "name": "Türkçe"
   },
+  "buddy": {
+    "hello": "Hi there! 👋",
+    "label": "Pixel Orhun — click to say hi"
+  },
   "notFound": {
     "title": "Page not found",
     "text": "The page you're looking for may have moved or never existed.",

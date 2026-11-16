@@ -8,6 +8,7 @@ import { bootScript } from "@/lib/theme";
 import { JsonLd, pageMeta, personJsonLd } from "@/lib/seo";
 import { SiteSidebar } from "@/components/site-sidebar";
 import { Footer } from "@/components/footer";
+import { PixelBuddy } from "@/components/pixel-buddy";
 
 const firaSans = Fira_Sans({
   variable: "--font-fira-sans",
@@ -40,6 +41,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function RootLayout({ children }: LayoutProps<"/[lang]">) {
   const locale = await getLocale();
+  const t = await getDictionary(locale);
   return (
     <html
       lang={locale}
@@ -56,6 +58,7 @@ export default async function RootLayout({ children }: LayoutProps<"/[lang]">) {
           <main className="flex-1">{children}</main>
           <Footer />
         </div>
+        <PixelBuddy hello={t.buddy.hello} label={t.buddy.label} />
       </body>
     </html>
   );

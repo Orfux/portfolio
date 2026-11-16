@@ -44,4 +44,7 @@ body {
   html[data-sidebar="closed"] .sidebar-open-btn {
     display: grid;
   }
+  html[data-sidebar="closed"] .buddy-track {
+    left: 0;
+  }
 }

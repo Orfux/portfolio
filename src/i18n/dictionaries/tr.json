@@ -71,6 +71,10 @@
   "language": {
     "name": "English"
   },
+  "buddy": {
+    "hello": "Merhaba! 👋",
+    "label": "Piksel Orhun — tıkla, el sallasın"
+  },
   "notFound": {
     "title": "Sayfa bulunamadı",
     "text": "Aradığın sayfa taşınmış ya da hiç var olmamış olabilir.",
